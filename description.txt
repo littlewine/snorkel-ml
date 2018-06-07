@@ -1,0 +1,30 @@
+snorkel.db
+containing:
+train-dev-test-outgoing
+
+unmapped candidates dropped
+
+
+split =  0 (train)
+Total cands: 16156
+Mapped cands: 9974
+Un-mapped cands: 6182
+True
+
+split =  1 (dev)
+Total cands: 9923
+Mapped cands: 6231
+Un-mapped cands: 3692
+True
+
+split =  2 (test)
+Total cands: 13896
+Mapped cands: 8278
+Un-mapped cands: 5618
+True
+
+split =  3 (Outgoing citations)
+Total cands: 79460
+Mapped cands: 0
+Un-mapped cands: 79460
+True

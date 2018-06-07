@@ -1,0 +1,28 @@
+snorkel.db
+containing:
+train-dev-test-outgoing
+
+
+split =  0 (train + (dev)/2 )
+Total cands: 12968
+Mapped cands: 12968
+Un-mapped cands: 0
+True
+
+split =  1 (validation = dev/2)
+Total cands: 3237
+Mapped cands: 3237
+Un-mapped cands: 0
+True
+
+split =  2 (test)
+Total cands: 8278
+Mapped cands: 8278
+Un-mapped cands: 0
+True
+
+split =  3  (outgoing citations)
+Total cands: 79460
+Mapped cands: 0
+Un-mapped cands: 79460
+True
