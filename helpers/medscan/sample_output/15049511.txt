@@ -1,0 +1,8 @@
+0:0 Inhibitory effects of the ID{4128=monoamine oxidase} inhibitor ID{1208212=tranylcypromine} on the ID{12610349=cytochrome P450} enzymes ID{1557=CYP2C19}, ID{1559=CYP2C9}, and ID{1565=CYP2D6}. 1.
+0:1 The inhibitory effects of ID{1208212=tranylcypromine}, a nonselective irreversible inhibitor of ID{4128=monoamine oxidase} , on three ID{12610349=cytochrome P450} enzymes, namely ID{1559=CYP2C9}, ID{1557=CYP2C19}, and ID{1565=CYP2D6}, have been evaluated in vitro. 2.
+0:2 The studies were conducted using cDNA-expressed ID{7000363=human} ID{12610349=cytochrome P450} enzymes and probe substrates. 3.
+0:3 A range of substrate concentrations was coincubated with a range of ID{1208212=tranylcypromine} concentrations in the presence of each of the ID{12610349=cytochrome P450} enzymes at 37 degrees C for a predetermined period of time.
+0:4 Product concentrations were quantified by HPLC with UV detection. 4.
+0:5 The results demonstrated that ID{1208212=tranylcypromine} is a competitive inhibitor of ID{1557=CYP2C19} (Ki = 32 microM) and ID{1565=CYP2D6} (Ki = 367 microM) and a noncompetitive inhibitor of ID{1559=CYP2C9} (Ki = 56 microM). 5.
+0:6 None of these inhibitory effects are considered clinically significant at usual therapeutic doses.
+0:7 However, in certain situations such as high dose ID{1208212=tranylcypromine} therapy, or in poor metabolizers of ID{1557=CYP2C19} substrates, clinically significant interactions might occur, particularly when ID{1208212=tranylcypromine} is coadministered with drugs with a narrow ID{15002195=therapeutic index}.

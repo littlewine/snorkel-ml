@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bibdataset xsi:schemaLocation="http://www.elsevier.com/xml/ani/ani http://www.elsevier.com/xml/ani/ani512.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ait="http://www.elsevier.com/xml/ani/ait" xmlns:ce="http://www.elsevier.com/xml/ani/common" xmlns="http://www.elsevier.com/xml/ani/ani">
+<item>
+<ait:process-info>
+<ait:date-delivered year="2016" month="06" day="15"/>
+<ait:date-sort year="2015" month="01" day="01"/>
+<ait:status type="core" state="new" stage="S300"/>
+</ait:process-info>
+<bibrecord>
+<item-info>
+<copyright type="Elsevier">Copyright 2016 Elsevier B.V., All rights reserved.</copyright>
+<itemidlist>
+<ce:doi>10.3233/978-1-61499-564-7-975</ce:doi>
+<itemid idtype="PUI">17251447</itemid>
+<itemid idtype="CAR-ID">643592588</itemid>
+<itemid idtype="NURSNG">2016002332</itemid>
+<itemid idtype="SNEMB">2016001390</itemid>
+</itemidlist>
+<history>
+<date-created timestamp="BST 05:16:11" year="2016" month="01" day="04"/>
+</history>
+<dbcollection>NURSNG</dbcollection>
+<dbcollection>SNEMB</dbcollection>
+</item-info>
+<head>
+<citation-info>
+<citation-type code="cp"/>
+<citation-language xml:lang="eng"/>
+<abstract-language xml:lang="eng"/>
+<author-keywords>
+<author-keyword>the</author-keyword>
+<author-keyword>the</author-keyword>
+<author-keyword>the</author-keyword>
+<author-keyword>the</author-keyword>
+<author-keyword>the</author-keyword>
+<author-keyword>the</author-keyword>
+</author-keywords>
+</citation-info>
+<citation-title>
+<titletext xml:lang="eng" original="y">the</titletext>
+</citation-title>
+<author-group>
+<author seq="1" type="auth">
+<ce:initials>M.</ce:initials>
+<ce:indexed-name>Nishikitani M.</ce:indexed-name>
+<ce:surname>Nishikitani</ce:surname>
+<ce:given-name>Mariko</ce:given-name>
+<ce:e-address>makorin@med.kyushu-u.ac.jp</ce:e-address>
+</author>
+<author seq="5" type="auth">
+<ce:initials>A.</ce:initials>
+<ce:indexed-name>Ahmed A.</ce:indexed-name>
+<ce:surname>Ahmed</ce:surname>
+<ce:given-name>Ashir</ce:given-name>
+</author>
+<author seq="6" type="auth">
+<ce:initials>N.</ce:initials>
+<ce:indexed-name>Nakashima N.</ce:indexed-name>
+<ce:surname>Nakashima</ce:surname>
+<ce:given-name>Naoki</ce:given-name>
+</author>
+<affiliation country="jpn">
+<organization>Institute of Decision Science for A Sustainable Society</organization>
+<organization>Kyushu University</organization>
+<address-part>3-1-1 Maidashi</address-part>
+<city>Fukuoka</city>
+<postal-code>812-8582</postal-code>
+</affiliation>
+</author-group>
+<author-group>
+<author seq="2" type="auth">
+<ce:initials>Y.</ce:initials>
+<ce:indexed-name>Nohara Y.</ce:indexed-name>
+<ce:surname>Nohara</ce:surname>
+<ce:given-name>Yasunobu</ce:given-name>
+</author>
+<author seq="6" type="auth">
+<ce:initials>N.</ce:initials>
+<ce:indexed-name>Nakashima N.</ce:indexed-name>
+<ce:surname>Nakashima</ce:surname>
+<ce:given-name>Naoki</ce:given-name>
+</author>
+<affiliation country="jpn">
+<organization>Medical Information Center</organization>
+<organization>Kyushu University Hospital</organization>
+<city>Fukuoka</city>
+</affiliation>
+</author-group>
+<author-group>
+<author seq="3" type="auth">
+<ce:initials>P.</ce:initials>
+<ce:indexed-name>Ghosh P.</ce:indexed-name>
+<ce:surname>Ghosh</ce:surname>
+<ce:given-name>Partha</ce:given-name>
+</author>
+<author seq="4" type="auth">
+<ce:initials>R.</ce:initials>
+<ce:indexed-name>Islam Maruf R.</ce:indexed-name>
+<ce:surname>Islam Maruf</ce:surname>
+<ce:given-name>Rafiqul</ce:given-name>
+</author>
+<affiliation country="bgd">
+<organization>Grameen Communications</organization>
+<city>Dhaka</city>
+</affiliation>
+</author-group>
+<author-group>
+<author seq="5" type="auth">
+<ce:initials>A.</ce:initials>
+<ce:indexed-name>Ahmed A.</ce:indexed-name>
+<ce:surname>Ahmed</ce:surname>
+<ce:given-name>Ashir</ce:given-name>
+</author>
+<affiliation country="jpn">
+<organization>Graduate School of Information Science and Electrical Engineering</organization>
+<organization>Kyushu University</organization>
+<city>Fukuoka</city>
+</affiliation>
+</author-group>
+<correspondence>
+<person>
+<ce:initials>M.</ce:initials>
+<ce:indexed-name>Nishikitani M.</ce:indexed-name>
+<ce:surname>Nishikitani</ce:surname>
+<ce:given-name>Mariko</ce:given-name>
+</person>
+<affiliation country="jpn">
+<organization>Institute of Decision Science for A Sustainable Society</organization>
+<organization>Kyushu University</organization>
+<address-part>3-1-1 Maidashi</address-part>
+<city>Fukuoka</city>
+<postal-code>812-8582</postal-code>
+</affiliation>
+<ce:e-address>makorin@med.kyushu-u.ac.jp</ce:e-address>
+</correspondence>
+<abstracts>
+<abstract original="y">
+<publishercopyright>© 2015 IMIA and IOS Press.</publishercopyright>
+<ce:para>RPE65 is essential for the function of cone photoreceptors in NRL-deficient mice. PURPOSE: Phototransduction in cones is initiated by the bleaching of their visual pigment, which comprises a protein component-cone opsin-and a vitamin A derivative-11-cis retinal. Little is known about the source of 11-cis retinal for cones. In the current study, neural retina leucine zipper-deficient (Nrl(-/-)) and rod opsin (Rho(-/-))-deficient mice were used, two mouse models that have been described as having a "cone-only" retina, to analyze the retinoid metabolism of cones. In addition, these mice were bred to retinal pigment epithelial protein 65 (Rpe65(-/-))-deficient mice to study the role of RPE65. METHODS: Mice were analyzed using morphology, Western blot analysis, immunohistochemistry, electroretinography (ERG), and retinoid profiling by HPLC. RESULTS: In comparison to wild-type mice, the retina of Nrl(-/-) mice contained elevated levels of RPE65 and cellular retinaldehyde-binding protein (CRALBP), suggesting a particular role of these two proteins for the retinoid metabolism of cones. In Nrl(-/-) mice, different retinoid species were present in proportions similar to wild type. Ablation of RPE65 in Nrl(-/-) and Rho(-/-) mice led to the absence of 11-cis retinal, but increased the total retinoid content, with retinyl esters representing the most abundant retinoid species. In the absence of RPE65, retinal sensitivity in Nrl(-/-) mice dropped by a factor of a thousand. CONCLUSIONS: The data show that RPE65, previously shown to be essential for rod function, is also indispensable for the production of 11-cis retinal for cones and thus for cone function.</ce:para>
+</abstract>
+</abstracts>
+<source type="k" country="nld">
+<sourcetitle>Studies in Health Technology and Informatics</sourcetitle>
+<sourcetitle-abbrev>Stud. Health Technol. Informatics</sourcetitle-abbrev>
+<translated-sourcetitle xml:lang="eng">Studies in Health Technology and Informatics</translated-sourcetitle>
+<issuetitle>MEDINFO 2015: eHealth-Enabled Health - Proceedings of the 15th World Congress on Health and Biomedical Informatics</issuetitle>
+<issn type="electronic">18798365</issn>
+<issn type="print">09269630</issn>
+<isbn type="electronic" length="13" level="volume">9781614995630</isbn>
+<volisspag>
+<voliss volume="216"/>
+<pagerange first="975"/>
+</volisspag>
+<publicationyear first="2015"/>
+<publicationdate>
+<year>2015</year>
+</publicationdate>
+<website>
+<ce:e-address>http://www.iospress.nl/bookserie/studies-in-health-technology-and-informatics/</ce:e-address>
+</website>
+<contributor-group>
+<contributor seq="1" role="edit">
+<ce:initials>A.</ce:initials>
+<ce:indexed-name>Georgiou A.</ce:indexed-name>
+<ce:surname>Georgiou</ce:surname>
+<ce:given-name>Andrew</ce:given-name>
+</contributor>
+</contributor-group>
+<contributor-group>
+<contributor seq="1" role="edit">
+<ce:initials>I.N.</ce:initials>
+<ce:indexed-name>Sarkar I.N.</ce:indexed-name>
+<ce:degrees>Dr.</ce:degrees>
+<ce:surname>Sarkar</ce:surname>
+<ce:given-name>Indra Neil</ce:given-name>
+</contributor>
+</contributor-group>
+<contributor-group>
+<contributor seq="1" role="edit">
+<ce:initials>P.M.</ce:initials>
+<ce:indexed-name>de Azevedo Marques P.M.</ce:indexed-name>
+<ce:surname>de Azevedo Marques</ce:surname>
+<ce:given-name>Paulo Mazzoncini</ce:given-name>
+</contributor>
+</contributor-group>
+<publisher>
+<publishername>IOS Press</publishername>
+<affiliation country="nld">
+<address-part>Nieuwe Hemweg 6B</address-part>
+<city>Amsterdam</city>
+<postal-code>1013 BG</postal-code>
+</affiliation>
+</publisher>
+<additional-srcinfo>
+<conferenceinfo>
+<confevent>
+<confname>15th World Congress on Health and Biomedical Informatics, MEDINFO 2015</confname>
+<confnumber>15</confnumber>
+<conftheme>eHealth-Enabled Health</conftheme>
+<confseriestitle>World Congress on Health and Biomedical Informatics</confseriestitle>
+<conflocation country="bra">
+<city>Sao Paulo</city>
+</conflocation>
+<confdate>
+<startdate year="2015" month="08" day="19"/>
+<enddate year="2015" month="08" day="23"/>
+</confdate>
+<confcode>116956</confcode>
+<confsponsors complete="n">
+<confsponsor></confsponsor>
+</confsponsors>
+</confevent>
+</conferenceinfo>
+</additional-srcinfo>
+</source>
+<enhancement>
+<classificationgroup>
+<classifications type="ASJC">
+<classification>2204</classification>
+<classification>2718</classification>
+<classification>3605</classification>
+</classifications>
+</classificationgroup>
+</enhancement>
+</head>
+<tail>
+<bibliography refcount="1"/>
+</tail>
+</bibrecord>
+</item>
+</bibdataset>
+

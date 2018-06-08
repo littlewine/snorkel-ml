@@ -1,0 +1,11 @@
+0:0 ID{12812219=DNA polymerase} minor groove interactions modulate mutagenic bypass of a templating ID{1225236=8-oxoguanine} lesion.
+0:1 A major base lesion resulting from ID{4000000,4003443=oxidative stress} is ID{1234588=8-oxo-7,8-dihydro-2'-deoxyguanosine} (ID{1225236=8-oxoG}) that has ambiguous coding potential.
+0:2 Error-free ID{4000000,4000881=DNA synthesis} involves ID{1225236=8-oxoG} adopting an anti-conformation to base pair with ID{1243522=cytosine} whereas mutagenic bypass involves ID{1225236=8-oxoG} adopting a syn-conformation to base pair with ID{1247856=adenine}.
+0:3 Left unrepaired the ID{1000000=syn-8-oxoG}/ID{1000000=dAMP base} pair results in a G-C to T-A transversion.
+0:4 During ID{4000000,4106289=base excision repair} of this mispair, ID{5423=DNA polymerase β} is confronted with ID{4000000,4106287=gap filling} opposite ID{1225236=8-oxoG}.
+0:5 To determine how ID{5423=polymerase β} discriminates between anti- and ID{1000000=syn-8-oxoG}, we introduced a point mutation (R283K) to alter insertion specificity.
+0:6 Kinetic studies demonstrate that this substitution results in an increased fidelity opposite ID{1225236=8-oxoG}.
+0:7 Structural studies with R283K ID{5423=polymerase β} show that the binary DNA complex has ID{1225236=8-oxoG} in equilibrium between anti- and syn-forms.
+0:8 Ternary complexes with incoming ID{1225157=dCTP} resemble the wild-type enzyme, with templating anti-8-oxoG ID{4000000,4201995=base pairing} with incoming ID{1243522=cytosine}.
+0:9 In contrast to wild-type ID{5423=polymerase β}, the ternary complex of the R283K mutant with an incoming ID{1000000=dATP-analogue} and templating ID{1225236=8-oxoG} resembles a G-A mismatched structure with ID{1225236=8-oxoG} adopting an anti-conformation.
+0:10 These results demonstrate that the incoming nucleotide is unable to induce ID{1000000=a syn-8-oxoG} conformation without minor groove ID{12812219=DNA polymerase} interactions that influence templating (anti-/syn-equilibrium) of ID{1225236=8-oxoG} while modulating fidelity.

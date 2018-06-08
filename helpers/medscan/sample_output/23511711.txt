@@ -1,0 +1,9 @@
+0:0 A Nanogram Dose of the ID{12000104=CYP3A} Probe Substrate ID{1205053=Midazolam} to Evaluate Drug Interactions.
+0:1 The objective of the study was to establish an in vivo method for assessing ID{12000104=cytochrome P450 3A} activity using therapeutically inert nanogram doses of ID{1205053=midazolam}.
+0:2 We administered four escalating single doses of ID{1205053=oral midazolam} (0.0001-3 mg) to 12 healthy participants, stratified according to ID{1577=CYP3A5} carrier status, to assess pharmacokinetics linearity.
+0:3 We then evaluated the interactions with the ID{12000104=cytochrome P450 3A} inhibitor ID{1208751=ketoconazole} (400 mg q.d.) after nanogram and regular doses of ID{1205053=midazolam}.
+0:4 Area under the ID{10000000,6800052=plasma} concentration-time curve (AUC) and peak ID{10000000,6800052=plasma} concentration (ID{15002614=Cmax}) were linear over the entire range of doses.
+0:5 ID{1208751=Ketoconazole} reduced midazolam ID{15001473=oral clearance} by 92.8%.
+0:6 AUC and ID{15002614=Cmax} increased by 1,540 and 363%, respectively.
+0:7 ID{1577=CYP3A5} carrier status had no influence on midazolam ID{15001473=oral clearance} or its inhibition by ID{1208751=ketoconazole}.
+0:8 This is the first study showing that ID{1205053=midazolam} pharmacokinetics is linear in a 30,000-fold concentration range, and therefore that nano- and microgram doses of ID{1205053=midazolam} can reliably predict the pharmacokinetics of ID{1205053=midazolam} in therapeutic doses and can be used to assess ID{12000104=cytochrome P450 3A} activity even in the presence of strong ID{12000104=cytochrome P450 3A} inhibitors.Clinical Pharmacology & Therapeutics (2013); advance online publication 20 March 2013. doi:10.1038/clpt.2013.27.

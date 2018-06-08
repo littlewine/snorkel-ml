@@ -1,0 +1,1167 @@
+_pui   23402744
+_dsb    aromatase
+_dsb    aromatic hydrocarbon receptor
+_dsb    dioxin
+_dsb    endogenous compound
+_dsb    polychlorinated biphenyl
+_dsb    saccharin
+_dsb    steroid hormone
+_dsb    tap water
+_dsb    unclassified drug
+_ib    adult
+_ib    animal experiment
+_ib    animal model
+_ib    behavior
+_ib    body weight
+_ib    brain function
+_ib    breast milk
+_ib    conference paper
+_ib    controlled study
+_ib    drug therapy
+_ib    female
+_ib    feminization
+_ib    male
+_ib    newborn
+_ib    nonhuman
+_ib    pregnancy
+_ib    progeny
+_ib    rat
+_ib    sex difference
+
+_pui   23562076
+_dsb    CD4 antigen
+_dsb    endogenous compound
+_dsb    insulin
+_dsb    transcription factor T bet
+_ib    T lymphocyte
+_ib    adaptive immunity
+_ib    adoptive transfer
+_ib    age
+_ib    animal cell
+_ib    animal experiment
+_ib    animal model
+_ib    cell count
+_ib    conference paper
+_ib    controlled study
+_ib    cytokine release
+_ib    energy expenditure
+_ib    gene expression
+_ib    glucose homeostasis
+_ib    immunocompetent cell
+_ib    innate immunity
+_ib    insulin resistance
+_ib    insulin sensitivity
+_ib    intra-abdominal fat
+_ib    lipid diet
+_ib    mouse
+_ib    nonhuman
+_ib    obesity
+_ib    phenotype
+_ib    physiology
+_ib    wild type mouse
+
+_pui   12477282
+_dsb    CpG oligodeoxynucleotide
+_dsb    bacterial DNA
+_dsb    carmustine
+_dsb    endogenous compound
+_dsb    glutathione
+_dsb    glutathione disulfide
+_dsb    glutathione reductase
+_dsb    immunoglobulin enhancer binding protein
+_dsb    interleukin 6
+_dsb    reactive oxygen metabolite
+_dsb    tumor necrosis factor
+_ib    animal cell
+_ib    animal experiment
+_ib    conference paper
+_ib    gene expression
+_ib    innate immunity
+_ib    macrophage activation
+_ib    macrophage cell line
+_ib    murine
+_ib    nonhuman
+_ib    oxidation reduction state
+
+_pui   23578391
+_dsb    anxiolytic agent
+_dsb    brain derived neurotrophic factor
+_dsb    endogenous compound
+_dsb    liothyronine
+_dsb    thyroid hormone
+_dsb    thyroid hormone receptor
+_dsb    water
+_ib    animal experiment
+_ib    animal model
+_ib    animal tissue
+_ib    brain cortex
+_ib    bromination
+_ib    conference paper
+_ib    dose response
+_ib    female
+_ib    free thyroxine index
+_ib    hippocampus
+_ib    maze test
+_ib    memory
+_ib    neurotoxicity
+_ib    nonhuman
+_ib    open field test
+_ib    pregnancy
+_ib    progeny
+_ib    rat
+_ib    spatial learning
+_ib    transference
+_ib    weaning
+
+_pui   15132128
+_dsb    capecitabine
+_dsb    dihydropyrimidine dehydrogenase
+_dsb    endogenous compound
+_dsb    fluorouracil
+_dsb    thymidylate synthase
+_ib    adult
+_ib    cancer susceptibility
+_ib    clinical article
+_ib    conference paper
+_ib    drug resistance
+_ib    drug therapy
+_ib    female
+_ib    gene expression profiling
+_ib    human
+_ib    human tissue
+_ib    immunohistochemistry
+_ib    male
+_ib    thyroid papillary carcinoma
+
+_pui   15110853
+_dsb    acetazolamide
+_dsb    carbonate dehydratase I
+_dsb    endogenous compound
+_dsb    isoenzyme
+_dsb    methazolamide
+_ib    ED50
+_ib    animal experiment
+_ib    anticonvulsant activity
+_ib    blood brain barrier
+_ib    conference paper
+_ib    convulsion
+_ib    intraperitoneal drug administration
+_ib    lipophilicity
+_ib    mouse
+_ib    nonhuman
+_ib    physiological process
+_ib    theoretical study
+
+_pui   12453616
+_dsb    alpha 1D adrenergic receptor
+_dsb    alpha 2 adrenergic receptor
+_dsb    endogenous compound
+_dsb    guanine nucleotide binding protein
+_dsb    methamphetamine
+_dsb    sodium chloride
+_ib    animal experiment
+_ib    animal tissue
+_ib    conference paper
+_ib    dentate gyrus
+_ib    hippocampus
+_ib    immunohistochemistry
+_ib    low drug dose
+_ib    mouse
+_ib    nonhuman
+
+_pui   23562072
+_dsb    ABC transporter A1
+_dsb    cholesterol
+_dsb    endogenous compound
+_dsb    liver X receptor
+_ib    blindness
+_ib    conference paper
+_ib    homeostasis
+_ib    human
+_ib    human cell
+_ib    lipid metabolism
+_ib    macrophage
+_ib    subretinal neovascularization
+_ib    wet macular degeneration
+
+_pui   23611835
+_dsb    1 (2 bromophenyl) 3 (2 hydroxy 4 nitrophenyl)urea
+_dsb    Bub1 related protein
+_dsb    antimitotic agent
+_dsb    beta tubulin
+_dsb    caspase
+_dsb    chemokine receptor CXCR2
+_dsb    endogenous compound
+_dsb    interleukin 8
+_dsb    mitogen activated protein kinase 14
+_dsb    multidrug resistance protein 1
+_dsb    protein bcl 2
+_dsb    protein bcl xl
+_dsb    protein p53
+_dsb    vinblastine
+_ib    MAPK signaling
+_ib    RNA interference
+_ib    adenocarcinoma
+_ib    antineoplastic activity
+_ib    apoptosis
+_ib    binding site
+_ib    cancer cell line
+_ib    cancer growth
+_ib    conference paper
+_ib    gene mutation
+_ib    gene overexpression
+_ib    gene silencing
+_ib    human
+_ib    human cell
+_ib    immunoblotting
+_ib    liver cell carcinoma
+_ib    microtubule assembly
+_ib    mitochondrion
+_ib    mitosis inhibition
+_ib    mitosis rate
+_ib    molecular docking
+_ib    multidrug resistance
+_ib    prometaphase
+
+_pui   15967876
+_dsb    endogenous compound
+_dsb    potassium channel HERG
+_ib    conference paper
+_ib    drug binding
+_ib    drug sensitivity
+_ib    gene mutation
+_ib    human
+_ib    long QT syndrome
+_ib    modulation
+_ib    potassium current
+_ib    side effect
+
+_pui   6706930
+_dsb    carbimazole
+_dsb    catalase
+_dsb    endogenous compound
+_dsb    hydrogen peroxide
+_dsb    iodide
+_dsb    lactoperoxidase
+_dsb    oxygen
+_dsb    peroxidase
+_dsb    thiamazole
+_dsb    thyroid peroxidase
+_dsb    tyrosine
+_dsb    unclassified drug
+_ib    catalysis
+_ib    competition
+_ib    conference paper
+_ib    iodination
+_ib    oxidation
+_ib    promoter region
+_ib    stoichiometry
+_ib    thyroid function
+
+_pui   10998082
+_dsb    2 (4 carboxyphenyl) 4,4,5,5 tetramethylimidazoline 1 oxyl 3 oxide
+_dsb    PADGEM protein
+_dsb    adenosine diphosphate
+_dsb    arginine
+_dsb    endogenous compound
+_dsb    endothelial nitric oxide synthase
+_dsb    n(g) nitroarginine
+_dsb    n(g) nitroarginine methyl ester
+_dsb    nitric oxide
+_dsb    nitroprusside sodium
+_dsb    scavenger
+_dsb    triflusal
+_ib    adult
+_ib    clinical article
+_ib    conference paper
+_ib    drug therapy
+_ib    female
+_ib    human
+_ib    human cell
+_ib    human experiment
+_ib    male
+_ib    modulation
+_ib    neutrophil
+_ib    protein expression
+_ib    thrombocyte activation
+_ib    thrombocyte aggregation
+_ib    thrombocyte membrane
+_ib    thrombocyte release reaction
+_ib    volunteer
+
+_pui   23620436
+_dsb    carcinogen
+_dsb    cycline
+_dsb    endogenous compound
+_dsb    smooth muscle actin
+_dsb    testosterone
+_dsb    uvomorulin
+_ia    prostate lobe
+_ib    adult
+_ib    advanced cancer
+_ib    animal cell
+_ib    animal experiment
+_ib    animal model
+_ib    animal tissue
+_ib    basal cell
+_ib    cancer growth
+_ib    cancer incidence
+_ib    carcinogenesis
+_ib    conference paper
+_ib    drug toxicity
+_ib    gerbil
+_ib    immunohistochemistry
+_ib    latent period
+_ib    male
+_ib    nonhuman
+_ib    phenotype
+_ib    prostate cancer
+_ib    rodent model
+_ib    rupture
+_ib    smooth muscle cell
+_ib    three dimensional imaging
+_ib    tumor growth
+
+_pui   7768269
+_dsb    anesthetic agent
+_dsb    chloroprocaine
+_dsb    cocaine
+_dsb    dimethocaine
+_dsb    dopamine
+_dsb    dopamine 1 receptor blocking agent
+_dsb    dopamine 2 receptor blocking agent
+_dsb    ecopipam
+_dsb    endogenous compound
+_dsb    procaine
+_dsb    raclopride
+_dsb    sodium chloride
+_ib    animal experiment
+_ib    conference paper
+_ib    discriminative stimulus
+_ib    drug combination
+_ib    low drug dose
+_ib    nonhuman
+_ib    squirrel monkey
+_ib    substitution reaction
+
+_pui   23188391
+_dsb    antilipemic agent
+_dsb    dipeptidyl peptidase IV inhibitor
+_dsb    endogenous compound
+_dsb    gastric inhibitory polypeptide
+_dsb    glucagon like peptide 1
+_dsb    glucose
+_dsb    incretin
+_ib    adult
+_ib    animal cell
+_ib    animal experiment
+_ib    animal model
+_ib    conference paper
+_ib    diabetic patient
+_ib    enteroendocrine cell
+_ib    female
+_ib    food intake
+_ib    glucose tolerance
+_ib    glucotoxicity
+_ib    insulin like activity
+_ib    insulin release
+_ib    lipid level
+_ib    lipotoxicity
+_ib    male
+_ib    non insulin dependent diabetes mellitus
+_ib    nonhuman
+_ib    pancreas islet beta cell
+
+_pui   23477624
+_dsb    alkaline phosphatase
+_dsb    amino terminal telopeptide
+_dsb    biological marker
+_dsb    calcium
+_dsb    carboxy terminal telopeptide
+_dsb    collagen type 1
+_dsb    deoxypyridinoline
+_dsb    endogenous compound
+_dsb    osteocalcin
+_dsb    phosphorus
+_ib    adult
+_ib    adverse event
+_ib    bone metabolism
+_ib    calcium urine level
+_ib    clinical article
+_ib    conference paper
+_ib    cross linking
+_ib    drug efficacy
+_ib    efficacy parameters
+_ib    female
+_ib    human
+_ib    human experiment
+_ib    human tissue
+_ib    osteolysis
+_ib    protein blood level
+_ib    urinalysis
+
+_pui   23615073
+_dsb    I kappa B
+_dsb    ascorbic acid
+_dsb    cigarette smoke
+_dsb    endogenous compound
+_dsb    immunoglobulin enhancer binding protein
+_dsb    luciferase
+_dsb    transcription factor Rel
+_ib    DNA binding
+_ib    Western blotting
+_ib    cellular distribution
+_ib    conference paper
+_ib    degradation
+_ib    guinea pig
+_ib    human
+_ib    human cell
+_ib    immunofluorescence
+_ib    inflammatory disease
+_ib    lung
+_ib    nonhuman
+_ib    prevention
+
+_pui   23538162
+_dsb    1,4 diamino 1,4 bis(2 aminophenylthio) 2,3 dicyanobutadiene
+_dsb    amyloid beta protein
+_dsb    endogenous compound
+_dsb    estrogen receptor alpha
+_dsb    glucocorticoid receptor
+_dsb    glucocorticoid receptor antagonist
+_dsb    hypoxia inducible factor 1alpha
+_dsb    mifepristone
+_dsb    mitogen activated protein kinase 1
+_dsb    reactive nitrogen species
+_ib    apoptosis
+_ib    conference paper
+_ib    endothelium cell
+_ib    human
+_ib    human cell
+_ib    mitochondrion
+_ib    signal transduction
+
+_pui   17251447
+_dsb    11 cis retinal
+_dsb    endogenous compound
+_dsb    leucine zipper protein
+_dsb    opsin
+_dsb    retinal
+_dsb    retinol ester
+_dsb    visual pigment
+_ib    Western blotting
+_ib    animal cell
+_ib    animal experiment
+_ib    animal tissue
+_ib    conference paper
+_ib    controlled study
+_ib    electroretinography
+_ib    high performance liquid chromatography
+_ib    immunohistochemistry
+_ib    metabolism
+_ib    morphology
+_ib    mouse
+_ib    mouse model
+_ib    nonhuman
+_ib    retina cone
+_ib    retinal neuroepithelial layer
+_ib    wild type mouse
+
+_pui   23063069
+_dsb    biological product
+_dsb    chlorphenotane
+_dsb    endogenous compound
+_dsb    fresh water
+_dsb    hepatocyte nuclear factor 4alpha
+_dsb    immunoglobulin enhancer binding protein
+_dsb    insulin
+_dsb    lipid
+_dsb    polychlorinated biphenyl
+_dsb    transcriptome
+_ib    Norway
+_ib    animal experiment
+_ib    biochemistry
+_ib    bromination
+_ib    cancer survival
+_ib    cardiovascular disease
+_ib    cell cycle
+_ib    conference paper
+_ib    disease course
+_ib    embryo
+_ib    endocrine system
+_ib    freshwater fish
+_ib    homeostasis
+_ib    lake
+_ib    lipid metabolism
+_ib    liver
+_ib    metabolite
+_ib    nonhuman
+_ib    pollutant
+_ib    protein metabolism
+_ib    reproduction
+_ib    toxicity
+_ib    zebra fish
+
+_pui   23044094
+_dsb    4 aminobenzoic acid
+_dsb    acridine
+_dsb    chlorpromazine
+_dsb    endogenous compound
+_dsb    ibuprofen
+_dsb    interleukin 18
+_dsb    ketoprofen
+_dsb    methoxsalen
+_dsb    promethazine
+_dsb    retinoic acid
+_ib    MTT assay
+_ib    conference paper
+_ib    cytotoxicity
+_ib    enzyme linked immunosorbent assay
+_ib    gene expression
+_ib    human
+_ib    human cell
+_ib    in vitro study
+_ib    keratinocyte cell line
+_ib    maximum concentration
+_ib    molecular weight
+_ib    sensitization
+_ib    ultraviolet A radiation
+
+_pui   23147415
+_dsb    1,5 bis(4 allyldimethylammoniumphenyl)pentan 3 one dibromide
+_dsb    acetylcholine
+_dsb    acetylcholinesterase
+_dsb    bambuterol
+_dsb    choline acetyltransferase
+_dsb    cholinesterase
+_dsb    donepezil
+_dsb    endogenous compound
+_dsb    physostigmine
+_ib    Alzheimer disease
+_ib    adult
+_ib    animal experiment
+_ib    animal model
+_ib    brain function
+_ib    choline uptake
+_ib    cholinergic system
+_ib    cognition
+_ib    conference paper
+_ib    controlled study
+_ib    drug resistance
+_ib    female
+_ib    gene expression
+_ib    genetic association
+_ib    glucose level
+_ib    heterozygosity
+_ib    hippocampus
+_ib    homozygosity
+_ib    in vivo study
+_ib    male
+_ib    microdialysis
+_ib    mouse
+_ib    nonhuman
+_ib    wild type mouse
+
+_pui   19428322
+_dsb    5 amino 4 imidazolecarboxamide riboside phosphate
+_dsb    acetyl coenzyme A carboxylase
+_dsb    caspase
+_dsb    endogenous compound
+_dsb    hydroxymethylglutaryl coenzyme A reductase kinase
+_dsb    metformin
+_dsb    phosphatidylserine
+_dsb    protein Bax
+_dsb    protein bcl 2
+_dsb    small interfering RNA
+_ib    C6 cell line (glioma)
+_ib    DNA fragmentation
+_ib    G2 phase cell cycle checkpoint
+_ib    animal cell
+_ib    animal experiment
+_ib    animal model
+_ib    apoptosis
+_ib    cell proliferation
+_ib    conference paper
+_ib    down regulation
+_ib    enzyme activity
+_ib    in vitro study
+_ib    nonhuman
+_ib    oxidative stress
+_ib    rat
+_ib    sensor
+
+_pui   23494186
+_dsb    bile acid sequestrant
+_dsb    ezetimibe
+_dsb    fibric acid derivative
+_dsb    hydroxymethylglutaryl coenzyme A reductase inhibitor
+_dsb    low density lipoprotein cholesterol
+_ib    adult
+_ib    cardiovascular disease
+_ib    conference paper
+_ib    drug combination
+_ib    human
+_ib    low density lipoprotein cholesterol level
+_ib    practice guideline
+
+_pui   23639738
+_dsb    bovine serum albumin
+_dsb    cholesterol esterase
+_dsb    endogenous compound
+_dsb    polymer
+_ib    conference paper
+_ib    degradation
+_ib    drug release
+_ib    fluid intake
+_ib    human
+_ib    hydrophilicity
+_ib    in vitro study
+_ib    molecular weight
+_ib    morphology
+
+_pui   9950599
+_dsb    RNA 16S
+_dsb    RNA directed DNA polymerase
+_dsb    coenzyme A
+_dsb    cytochrome b
+_dsb    cytochrome c oxidase
+_dsb    cytokine
+_dsb    endogenous compound
+_dsb    glutamine
+_dsb    hydrogen peroxide
+_dsb    hydrolase
+_dsb    messenger RNA
+_dsb    nicotinamide adenine dinucleotide
+_dsb    nuclear protein
+_dsb    reduced nicotinamide adenine dinucleotide dehydrogenase (ubiquinone)
+_ib    DNA sequence
+_ib    Northern blotting
+_ib    alternative RNA splicing
+_ib    conference paper
+_ib    controlled study
+_ib    differential display
+_ib    epithelial cell line
+_ib    human
+_ib    human cell
+_ib    in vitro study
+_ib    lens epithelium cell
+_ib    mitochondrion
+_ib    oxidative stress
+_ib    pathology
+_ib    polymerase chain reaction
+_ib    protein processing
+_ib    reaction analysis
+
+_pui   10403635
+_dsb    acetylcholinesterase
+_dsb    aryldialkylphosphatase
+_dsb    carbamic acid
+_dsb    endogenous compound
+_dsb    eptastigmine
+_dsb    physostigmine
+_dsb    pyridostigmine
+_dsb    sarin
+_ib    LD50
+_ib    animal experiment
+_ib    animal model
+_ib    body weight
+_ib    brain
+_ib    conference paper
+_ib    controlled clinical trial
+_ib    controlled study
+_ib    drug combination
+_ib    drug megadose
+_ib    drug toxicity
+_ib    intoxication
+_ib    intravenous drug administration
+_ib    mouse
+_ib    nonhuman
+_ib    side effect
+_ib    stomach
+_ib    survival time
+
+_pui   23409951
+_dsb    20 hydroxyicosatetraenoic acid
+_dsb    alkane 1 monooxygenase
+_dsb    cytochrome P450
+_dsb    endogenous compound
+_dsb    epoxide hydrolase
+_dsb    isoenzyme
+_dsb    messenger RNA
+_ib    arachidonic acid metabolism
+_ib    conference paper
+_ib    gene expression
+_ib    human
+_ib    human experiment
+_ib    kidney
+_ib    liver
+_ib    lung function
+_ib    toxicity
+
+_pui   23195959
+_dsb    endogenous compound
+_dsb    ligand
+_dsb    polyubiquitin
+_dsb    proteasome
+_dsb    protein kinase B
+_dsb    somatomedin C
+_dsb    ubiquitin
+_dsb    ubiquitin protein ligase NEDD4
+_ib    catalysis
+_ib    cell membrane
+_ib    conference paper
+_ib    degradation
+_ib    gene mutation
+_ib    human
+_ib    in vitro study
+_ib    in vivo study
+_ib    malignant neoplasm
+_ib    membrane binding
+_ib    ubiquitination
+_ib    wild type
+
+_pui   10471277
+_dsb    adenylate cyclase
+_dsb    alprenolol
+_dsb    azide
+_dsb    beta 2 adrenergic receptor
+_dsb    blood clotting factor 10
+_dsb    endogenous compound
+_dsb    epitope
+_dsb    guanosine 5' o (3 thiotriphosphate)
+_dsb    iodine 125
+_dsb    peptide
+_dsb    proteinase
+_dsb    salmeterol
+_dsb    unclassified drug
+_ib    agonist
+_ib    amino terminal sequence
+_ib    binding site
+_ib    carboxy terminal sequence
+_ib    conference paper
+_ib    guinea pig
+_ib    human
+_ib    human cell
+_ib    hydrophobicity
+_ib    leisure
+_ib    membrane
+_ib    nonhuman
+_ib    polyacrylamide gel electrophoresis
+_ib    thinking
+_ib    trachea
+
+_pui   15204055
+_dsb    amisulpride
+_dsb    clozapine
+_dsb    endogenous compound
+_dsb    olanzapine
+_dsb    quetiapine
+_dsb    risperidone
+_dsb    serotonin 2A receptor
+_ib    DSM-IV
+_ib    adult
+_ib    adverse drug reaction
+_ib    clinical article
+_ib    conference paper
+_ib    controlled study
+_ib    diagnosis
+_ib    female
+_ib    human
+_ib    male
+_ib    schizophrenia
+_ib    side effect
+_ib    visual memory
+
+_pui   23576111
+_dsb    antioxidant
+_dsb    catalase
+_dsb    endogenous compound
+_dsb    glutathione peroxidase
+_dsb    superoxide dismutase
+_dsb    water
+_ib    adult
+_ib    conference paper
+_ib    dietary supplement
+_ib    drinking
+_ib    drug therapy
+_ib    female
+_ib    fruit
+_ib    human
+_ib    laboratory personnel
+_ib    male
+_ib    oxidative stress
+_ib    questionnaire
+_ib    saliva level
+_ib    smoking
+_ib    tea
+_ib    toxicity
+_ib    worker
+
+_pui   23174265
+_dsb    4 (1,1 dimethylheptyl) 1',2',3',4',5',6' hexahydro 2,3' dihydroxy 6' (3 hydroxypropyl)biphenyl
+_dsb    beta arrestin 2
+_dsb    cannabinoid 2 receptor
+_dsb    cannabinoid 2 receptor agonist
+_dsb    clathrin
+_dsb    endocannabinoid
+_dsb    endogenous compound
+_dsb    messenger RNA
+_dsb    mitogen activated protein kinase 1
+_dsb    mitogen activated protein kinase 3
+_dsb    serotonin 2A receptor
+_dsb    short hairpin RNA
+_dsb    transcription factor AP 1
+_ib    Sprague Dawley rat
+_ib    adverse event
+_ib    animal cell
+_ib    animal experiment
+_ib    conference paper
+_ib    drug therapy
+_ib    drug toxicity
+_ib    endocytosis
+_ib    gene silencing
+_ib    immunoprecipitation
+_ib    neuronal cell line
+_ib    neurotransmission
+_ib    nonhuman
+_ib    prefrontal cortex
+_ib    rat
+_ib    transcription initiation
+_ib    upregulation
+
+_pui   23643664
+_dsb    1,2,3,6 tetrahydro 1 methyl 4 phenylpyridine
+_dsb    dopamine
+_dsb    dopamine transporter
+_dsb    endogenous compound
+_dsb    parkin
+_dsb    sodium chloride
+_dsb    tyrosine 3 monooxygenase
+_ib    animal cell
+_ib    animal experiment
+_ib    animal model
+_ib    arcuate nucleus
+_ib    cell body
+_ib    conference paper
+_ib    corpus striatum
+_ib    dopaminergic nerve cell
+_ib    drug resistance
+_ib    drug toxicity
+_ib    immunocompetent cell
+_ib    injection
+_ib    mouse
+_ib    nerve degeneration
+_ib    nerve ending
+_ib    neurotoxicity
+_ib    nonhuman
+_ib    pathology
+_ib    side effect
+_ib    substantia nigra
+
+_pui   23458420
+_dsb    insulin
+_ib    conference paper
+_ib    fluorescence
+_ib    high performance liquid chromatography
+_ib    nuclear magnetic resonance spectroscopy
+_ib    oxidation
+_ib    storage
+_ib    ultraviolet irradiation
+
+_pui   23103563
+_dsb    DNA (cytosine 5) methyltransferase 1
+_dsb    Ras protein
+_dsb    caspase
+_dsb    endogenous compound
+_dsb    farnesyl diphosphate
+_dsb    geranylgeranyl pyrophosphate
+_dsb    ibandronic acid
+_dsb    monomeric guanine nucleotide binding protein
+_dsb    protein farnesyltransferase
+_dsb    tumor necrosis factor receptor superfamily member 6
+_ib    DNA demethylation
+_ib    DNA methylation
+_ib    MC3T3-E1 cell line
+_ib    animal cell
+_ib    animal experiment
+_ib    animal model
+_ib    antineoplastic activity
+_ib    apoptosis
+_ib    breast cancer
+_ib    cell proliferation
+_ib    conference paper
+_ib    controlled study
+_ib    down regulation
+_ib    epigenetics
+_ib    female
+_ib    isoprenylation
+_ib    modulation
+_ib    mouse
+_ib    multigene family
+_ib    nonhuman
+_ib    osteoblast
+_ib    tumor cell
+_ib    upregulation
+
+_pui   23339966
+_dsb    antiinflammatory agent
+_dsb    antineoplastic agent
+_dsb    cyclooxygenase 2
+_dsb    endogenous compound
+_dsb    ligand
+_ib    GI50
+_ib    MDA-MB-435 cell line
+_ib    SR cell line
+_ib    cancer therapy
+_ib    conference paper
+_ib    cytotoxicity
+_ib    human
+_ib    human cell
+_ib    hydrogen bond
+_ib    hydrophobicity
+_ib    in vitro study
+_ib    leukemia
+_ib    lung cancer cell line
+_ib    melanoma cell line
+_ib    non small cell lung cancer
+_ib    ovarian cancer cell line
+
+_pui   23432095
+_dsb    20alpha hydroxysteroid dehydrogenase
+_dsb    aldo keto reductase family 1 member C2
+_dsb    aldo keto reductase family 1 member C3
+_dsb    androstanolone
+_dsb    endogenous compound
+_dsb    indometacin
+_dsb    prostaglandin synthase
+_dsb    testosterone
+_ib    catalysis
+_ib    conference paper
+_ib    crystal structure
+_ib    drug resistance
+_ib    human
+_ib    library
+_ib    male
+_ib    prostate cancer
+
+_pui   23613080
+_dsb    glass
+_ib    bleaching
+_ib    conference paper
+_ib    degradation
+_ib    film
+_ib    modulation
+
+_pui   23150485
+_dsb    Janus kinase 2
+_dsb    STAT5 protein
+_dsb    breast cancer resistance protein
+_dsb    endogenous compound
+_dsb    gamma interferon
+_dsb    luciferase
+_dsb    mitogen activated protein kinase
+_dsb    phosphatidylinositol 3 kinase
+_dsb    prolactin
+_dsb    small interfering RNA
+_ib    5' flanking region
+_ib    breast cancer
+_ib    conference paper
+_ib    female
+_ib    gene amplification
+_ib    gene mutation
+_ib    human
+_ib    human cell
+_ib    promoter region
+_ib    signal transduction
+_ib    transcription initiation site
+
+_pui   23110812
+_dsb    edetic acid
+_dsb    endogenous compound
+_dsb    glyceraldehyde 3 phosphate dehydrogenase
+_dsb    interleukin 1beta
+_dsb    interleukin 8
+_dsb    protein c fos
+_ib    RNA analysis
+_ib    RNA extraction
+_ib    adult
+_ib    blood collection tube
+_ib    classification
+_ib    conference paper
+_ib    controlled study
+_ib    human
+_ib    in vitro study
+_ib    medicine
+_ib    pre-analytical phase
+_ib    quality control
+_ib    real time polymerase chain reaction
+_ib    storage temperature
+
+_pui   17484506
+_dsb    angiogenesis inhibitor
+_dsb    aromatase inhibitor
+_dsb    endogenous compound
+_dsb    estrogen
+_dsb    estrogen receptor
+_dsb    gonadorelin agonist
+_dsb    hydroxymethylglutaryl coenzyme A reductase inhibitor
+_dsb    immunomodulating agent
+_dsb    levonorgestrel
+_dsb    progesterone receptor
+_ib    adult
+_ib    conference paper
+_ib    diagnosis
+_ib    endometriosis
+_ib    female
+_ib    genomics
+_ib    human
+_ib    intrauterine contraceptive device
+_ib    laparoscopic surgery
+_ib    morbidity
+_ib    reproduction
+_ib    subfertility
+_ib    syndrome
+
+_pui   23220749
+_dsb    apomorphine
+_dsb    endogenous compound
+_dsb    morphine
+_dsb    serotonin
+_dsb    transient receptor potential channel A1
+_ib    animal cell
+_ib    animal experiment
+_ib    animal model
+_ib    cell line
+_ib    conference paper
+_ib    drug resistance
+_ib    drug therapy
+_ib    drug toxicity
+_ib    injection site pain
+_ib    nausea
+_ib    nerve cell
+_ib    nonhuman
+_ib    oxidation reduction reaction
+_ib    rat
+_ib    sensor
+_ib    side effect
+_ib    spinal ganglion
+_ib    ulcer
+_ib    vomiting
+
+_pui   23360475
+_dsb    unclassified drug
+_ib    animal experiment
+_ib    animal model
+_ib    conference paper
+_ib    drug bioavailability
+_ib    drug efficacy
+_ib    in vitro study
+_ib    in vivo study
+_ib    murine
+_ib    nonhuman
+_ib    pharmacokinetics
+_ib    tuberculosis
+
+_pui   6645495
+_dsb    16alpha ethyl 21 hydroxy 19 norpregn 4 ene 3,20 dione
+_dsb    androgen
+_dsb    androgen receptor
+_dsb    biological product
+_dsb    cyproterone acetate
+_dsb    desogestrel
+_dsb    endogenous compound
+_dsb    estrogen receptor
+_dsb    etonogestrel
+_dsb    levonorgestrel
+_dsb    medroxyprogesterone acetate
+_dsb    molybdic acid
+_dsb    norethisterone
+_dsb    noretynodrel
+_dsb    progesterone
+_dsb    progesterone receptor
+_ib    Leporidae
+_ib    animal cell
+_ib    animal experiment
+_ib    conference paper
+_ib    cytosolic fraction
+_ib    female
+_ib    metabolite
+_ib    myometrium
+_ib    nonhuman
+_ib    rat
+
+_pui   14766200
+_dsb    endogenous compound
+_dsb    messenger RNA
+_dsb    neuronal nitric oxide synthase
+_dsb    nitric oxide synthase
+_ib    animal experiment
+_ib    brain
+_ib    chick
+_ib    conference paper
+_ib    embryo
+_ib    gene expression
+_ib    heart
+_ib    in situ hybridization
+_ib    kidney
+_ib    liver
+_ib    lung
+_ib    nonhuman
+_ib    rat
+_ib    rat embryo
+_ib    spinal cord ventral horn
+_ib    spinal ganglion
+
+_pui   9399970
+_dsb    3,4 dichloro n methyl n [2 (1 pyrrolidinyl)cyclohexyl]benzeneacetamide
+_dsb    4 [alpha (4 allyl 2,5 dimethyl 1 piperazinyl) 3 hydroxybenzyl] n,n diethylbenzamide
+_dsb    4 [alpha (4 allyl 2,5 dimethyl 1 piperazinyl) 3 methoxybenzyl] n,n diethylbenzamide
+_dsb    beta funaltrexamine
+_dsb    bremazocine
+_dsb    delta opiate receptor
+_dsb    delta opiate receptor agonist
+_dsb    dezocine
+_dsb    endogenous compound
+_dsb    fentanyl
+_dsb    kappa opiate receptor agonist
+_dsb    morphine
+_dsb    mu opiate receptor
+_dsb    mu opiate receptor agonist
+_dsb    n allylnormetazocine
+_dsb    n methyl n [7 (1 pyrrolidinyl) 1 oxaspiro[4.5]dec 8 yl]benzeneacetamide
+_dsb    nalbuphine
+_dsb    naloxone
+_dsb    naltrindole
+_dsb    norbinaltorphimine
+_dsb    sodium chloride
+_dsb    spiradoline
+_ib    Columbidae
+_ib    conference paper
+_ib    discriminative stimulus
+_ib    nonhuman
+_ib    substitution reaction
+
+_pui   23103450
+_dsb    arsenic trioxide
+_dsb    endogenous compound
+_dsb    matrine
+_dsb    messenger RNA
+_dsb    oxymatrine
+_dsb    potassium channel HERG
+_dsb    potassium channel stimulating agent
+_dsb    transcription factor Sp1
+_ib    action potential duration
+_ib    cardiotoxicity
+_ib    cell membrane
+_ib    conference paper
+_ib    guinea pig
+_ib    human
+_ib    human cell
+_ib    long QT syndrome 2
+_ib    long term care
+_ib    muscle cell
+_ib    nonhuman
+_ib    promyelocytic leukemia
+_ib    protein expression
+_ib    upregulation
+

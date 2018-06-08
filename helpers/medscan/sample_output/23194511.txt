@@ -1,0 +1,11 @@
+0:0 ID{1000000=Phenolic} profiles and antioxidant activity of litchi pulp of different cultivars cultivated in Southern China.
+0:1 The ID{1000000=phenolic} profiles and antioxidant activity of litchi pulp of 13 varieties were investigated.
+0:2 The free, bound and total ID{1000000=phenolic} contents were 66.17-226.03, 11.18-40.54, and 101.51-259.18 mg of ID{1207334=gallic acid} equivalents/100 g, respectively.
+0:3 The free, bound and total ID{1808951=flavonoid} contents were 16.68-110.33, 10.48-22.75, and 39.43-129.86 mg of ID{1208101=catechin} equivalents/100 g, respectively.
+0:4 Free ID{1000000=phenolics} and ID{1808951=flavonoids} contributed averagely 80.1% and 75% to their total contents, respectively.
+0:5 Six individual ID{1000000=phenolics} (gallic acid, ID{1213012=chlorogenic acid}, ID{1208101=(+)-catechin}, ID{1213390=caffeic acid}, ID{1233454=(-)-epicatechin}, and ID{1207968=rutin}) were detected in litchi pulp by HPLC.
+0:6 The contents of each compound in free and bound fractions were determined.
+0:7 Significant varietal discrepancy in antioxidant activity was also found by FRAP and ID{1000000=DPPH} scavenging capacity methods.
+0:8 Antioxidant activity was significantly correlated with ID{1000000=phenolic} and ID{1808951=flavonoid} contents.
+0:9 Thus, ID{1000000=phenolics} and ID{1808951=flavonoids} exist mainly in the free form in litchi pulp.
+0:10 There were significant varietal differences in phytochemical contents and antioxidant activity of litchi pulp.
