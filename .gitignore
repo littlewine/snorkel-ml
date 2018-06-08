@@ -44,4 +44,4 @@ tutorials/tables/data/hardware/
 *.zip
 *.tar.gz
 *.pkl
-
+nohup.out

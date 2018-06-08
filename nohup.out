@@ -213,3 +213,29 @@ Snorkel home directory: /home/antonis/snorkel
 /home/antonis/snorkel/set_env.sh: 4: /home/antonis/snorkel/set_env.sh: [[: not found
 Using PYTHONPATH=:/home/antonis/snorkel:/home/antonis/snorkel/treedlib
 Environment variables set!
+[I 15:21:44.124 NotebookApp] Writing notebook server cookie secret to /run/user/1000/jupyter/notebook_cookie_secret
+[I 15:21:44.227 NotebookApp] Serving notebooks from local directory: /home/antonis/ipythonNotebooks/snorkel-ml
+[I 15:21:44.227 NotebookApp] 0 active kernels
+[I 15:21:44.227 NotebookApp] The Jupyter Notebook is running at:
+[I 15:21:44.227 NotebookApp] http://localhost:8999/?token=0358e3e8af535197e1c1abb0a5f0fe6962edc4e6aff47431
+[I 15:21:44.228 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 15:21:44.228 NotebookApp] 
+    
+    Copy/paste this URL into your browser when you connect for the first time,
+    to login with a token:
+        http://localhost:8999/?token=0358e3e8af535197e1c1abb0a5f0fe6962edc4e6aff47431
+[I 15:22:37.366 NotebookApp] Shutting down on /api/shutdown request.
+[I 15:22:37.366 NotebookApp] Shutting down 0 kernels
+[I 15:28:41.815 NotebookApp] Serving notebooks from local directory: /home/antonis/ipythonNotebooks/snorkel-ml
+[I 15:28:41.815 NotebookApp] 0 active kernels
+[I 15:28:41.815 NotebookApp] The Jupyter Notebook is running at:
+[I 15:28:41.815 NotebookApp] http://localhost:8888/?token=0dc61382a8155fa99fa4426cca3833a4e8408f41b97e94e6
+[I 15:28:41.815 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 15:28:41.816 NotebookApp] 
+    
+    Copy/paste this URL into your browser when you connect for the first time,
+    to login with a token:
+        http://localhost:8888/?token=0dc61382a8155fa99fa4426cca3833a4e8408f41b97e94e6
+[I 15:28:42.044 NotebookApp] Accepting one-time-token-authenticated connection from 127.0.0.1
+[I 15:29:05.379 NotebookApp] Interrupted...
+[I 15:29:05.380 NotebookApp] Shutting down 0 kernels

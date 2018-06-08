@@ -17,4 +17,5 @@ fi
 
 # Launch jupyter notebook!
 echo "Launching Jupyter Notebook..."
-nohup jupyter notebook --no-browser --port=8999 & 
+source activate snorkel27
+nohup jupyter notebook
