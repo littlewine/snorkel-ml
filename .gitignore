@@ -45,3 +45,4 @@ tutorials/tables/data/hardware/
 *.tar.gz
 *.pkl
 nohup.out
+*.hdf5
