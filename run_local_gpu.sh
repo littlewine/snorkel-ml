@@ -1,4 +1,12 @@
 # Set & move to home directory
+
+# Activate nvidia gpu
+sudo ls
+sudo prime-select nvidia
+sudo prime-select intel
+optirun nvidia-smi
+
+
 source set_env.sh
 cd "$SNORKELHOME"
 
@@ -15,6 +23,9 @@ if [ ! -f "$PARSER" ]; then
     esac
 fi
 
+# source activate snorkel 27
+# python ~/tf_gpu_check.py
+
 # Launch jupyter notebook!
 echo "Launching Jupyter Notebook..."
-jupyter notebook
+optirun jupyter notebook
