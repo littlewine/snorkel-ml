@@ -1,3 +1,4 @@
+source activate snorkel27
 export SNORKELHOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "Snorkel home directory: $SNORKELHOME"
 export PYTHONPATH="$PYTHONPATH:$SNORKELHOME:$SNORKELHOME/treedlib"
