@@ -3,6 +3,8 @@ from snorkel.models import StableLabel
 from snorkel.db_helpers import reload_annotator_labels
 import codecs, glob
 import pickle
+from scipy.sparse import csr_matrix
+import numpy as np
 
 
 def get_raw_document_txt(doc_id):
@@ -59,7 +61,41 @@ def load_external_labels(session, candidate_class, tsv_path, annotator_name='gol
         reload_annotator_labels(session, candidate_class, annotator_name, split=1, filter_label_split= filter_label_split, debug=debug)
         reload_annotator_labels(session, candidate_class, annotator_name, split=2, filter_label_split= filter_label_split, debug=debug)
 
-        
+
+
+def delete_from_csr(mat, row_indices=[], col_indices=[]):
+    """
+    Remove the rows (denoted by ``row_indices``) and columns (denoted by ``col_indices``) from the CSR sparse matrix ``mat``.
+    WARNING: Indices of altered axes are reset in the returned matrix
+    
+    # from https://stackoverflow.com/questions/13077527/is-there-a-numpy-delete-equivalent-for-sparse-matrices
+    """
+    if not isinstance(mat, csr_matrix):
+        raise ValueError("works only for CSR format -- use .tocsr() first")
+
+    rows = []
+    cols = []
+    if row_indices:
+        rows = list(row_indices)
+    if col_indices:
+        cols = list(col_indices)
+
+    if len(rows) > 0 and len(cols) > 0:
+        row_mask = np.ones(mat.shape[0], dtype=bool)
+        row_mask[rows] = False
+        col_mask = np.ones(mat.shape[1], dtype=bool)
+        col_mask[cols] = False
+        return mat[row_mask][:,col_mask]
+    elif len(rows) > 0:
+        mask = np.ones(mat.shape[0], dtype=bool)
+        mask[rows] = False
+        return mat[mask]
+    elif len(cols) > 0:
+        mask = np.ones(mat.shape[1], dtype=bool)
+        mask[cols] = False
+        return mat[:,mask]
+    else:
+        return mat
     
 #######################################################
 ### Load from pickle dictionary (on document level) ###
@@ -113,8 +149,6 @@ def load_external_labels(session, candidate_class, tsv_path, annotator_name='gol
 ##########################################
 #####       Classifier selection    ######
 ##########################################
-
-
 
 
 def merge_pickles_pred_dicts(pickle_list, f1_threshold=0):

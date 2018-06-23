@@ -47,40 +47,66 @@ def childIterator(root, level = 0, parent = "", debug=False, g=nx.Graph()):
         g = childIterator(child, level + 1, root, g=g)
     return g
 
-def get_shortest_dep_path(sentence, T1, T2, nlp ):
+def build_dep_graph(dep_parents, words=None):
+    """Return the syntactic dependency graph. 
+    If words (list) are given, graph nodes are words, otherwise indices."""
+    g = nx.Graph()
+    for pos,parent in enumerate(dep_parents):
+        if parent>0: #if parent==0 then word == root of sentence
+            #substract 1 from parent position to match list index
+            if words:
+                g.add_edge(words[pos],words[parent-1])
+            else:
+                g.add_edge(pos,parent-1)
+    return g
+
+def get_shortest_dep_path(dep_parents, T1, T2 ):
     """Get only a subpart of sentence, connecting the words in two 
     using spacy and networkx"""
-    
-    #parse in spaCy
-    doc = nlp(sentence)
-#     print '\n',sentence
-    if (doc[T1].norm_!=u'ENTITY1') or (doc[T2].norm_!=u'ENTITY2'):
-        
-#         print 'wrong indices. searching sentence for ENTITY1 and ENTITY2'
-        T1,T2 = None,None
-        for token in doc:
-            if token.text == 'ENTITY1':
-                T1 = token.i
-            elif token.text == 'ENTITY2':
-                T2 = token.i
-        
-        if (not T1) or (not T2):#if still None, return whole sentence
-            return sentence
-    
-    
-    root_idx = doc.get_lca_matrix()[T1,T2]
-    # delete prev graph
-    g = nx.Graph()
-    g = childIterator(doc[root_idx], level=0, g=g)
-#     nx.draw_networkx(g)
+    g = build_dep_graph(dep_parents)
+    return [i for i in shortest_path(g)[T1][T2]]
 
-    # idk wtf is going on here, for some reason keys T1 and T2 do not exist sometimes.
-#     print shortest_path(g)[T1][T2]
-    try:
-        short_sent = [doc[x].norm_ for x in  shortest_path(g)[T1][T2]]
-    except:
-        short_sent = sentence
-    return ' '.join(short_sent)
+# def get_shortest_dep_sentence(words, dep_parents, T1, T2 ):
+#     """Get the subsentence, connecting words in indices T1,T2"""
+#     g = build_dep_graph(dep_parents)
+#     return ' '.join([words[i] for i in shortest_path(g)[T1][T2]])
+    
+
+# Deprecated
+# def get_shortest_dep_path(sentence, T1, T2, nlp ):
+#     """Get only a subpart of sentence, connecting the words in two 
+#     using spacy and networkx"""
+    
+#     #parse in spaCy
+#     doc = nlp(sentence)
+# #     print '\n',sentence
+#     if (doc[T1].norm_!=u'ENTITY1') or (doc[T2].norm_!=u'ENTITY2'):
+        
+# #         print 'wrong indices. searching sentence for ENTITY1 and ENTITY2'
+#         T1,T2 = None,None
+#         for token in doc:
+#             if token.text == 'ENTITY1':
+#                 T1 = token.i
+#             elif token.text == 'ENTITY2':
+#                 T2 = token.i
+        
+#         if (not T1) or (not T2):#if still None, return whole sentence
+#             return sentence
+    
+    
+#     root_idx = doc.get_lca_matrix()[T1,T2]
+#     # delete prev graph
+#     g = nx.Graph()
+#     g = childIterator(doc[root_idx], level=0, g=g)
+# #     nx.draw_networkx(g)
+
+#     # idk wtf is going on here, for some reason keys T1 and T2 do not exist sometimes.
+# #     print shortest_path(g)[T1][T2]
+#     try:
+#         short_sent = [doc[x].norm_ for x in  shortest_path(g)[T1][T2]]
+#     except:
+#         short_sent = sentence
+#     return ' '.join(short_sent)
 
 
 
@@ -99,7 +125,7 @@ def recreate_text_representation(candidate, entity_replacement = True, span_repl
     
     """
     value = deepcopy(candidate)
-    if lemmas and not shortest_dep_path:
+    if lemmas:# and not shortest_dep_path:
         tokens = deepcopy(value['lemmas'])
     else:
         tokens = deepcopy(value['words'])
@@ -109,6 +135,17 @@ def recreate_text_representation(candidate, entity_replacement = True, span_repl
             if t_type !=u'O':
                 tokens[i] = str(t_type).upper()
     
+    if shortest_dep_path:
+        for idx in value['chem_idx']:
+            tokens[idx] = "ENTITY1"
+        for idx in value['gene_idx']:
+            tokens[idx] = "ENTITY2"
+            
+        idcs_to_keep = get_shortest_dep_path(candidate['dep_parents'], candidate['chem_idx'][0], candidate['gene_idx'][0] )
+        words = [tokens[i] for i in idcs_to_keep]
+        return ' '.join(words)
+            
+            
     # if only_between, drop words before/after chem+gene
     if trim_text and not shortest_dep_path:
         start = min(value['gene_idx']+value['chem_idx'])
@@ -151,8 +188,8 @@ def recreate_text_representation(candidate, entity_replacement = True, span_repl
         for index in sorted(idx_to_del, reverse=True):
             del tokens[index]
             
-    if shortest_dep_path:
-        return get_shortest_dep_path(' '.join(tokens) , chem_idx, gene_idx, nlp)
+#     if shortest_dep_path:
+#         return get_shortest_dep_path(' '.join(tokens) , chem_idx, gene_idx, nlp)
         
         
     if replace_conseq_entities and not shortest_dep_path: 
@@ -246,6 +283,8 @@ def export_snorkel_candidates(session, REGULATOR, split_nr, include_unlabelled):
                 'entity_types' : c.get_parent().entity_types,
                 'lemmas' : c.get_parent().lemmas,
                 'pos_tags' : c.get_parent().pos_tags,
+                'dep_parents' : c.get_parent().dep_parents,
+                'dep_labels' : c.get_parent().dep_labels,
             }
             candidates[c.id] = features
             #
