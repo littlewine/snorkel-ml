@@ -38,22 +38,48 @@ def get_pubmed_citations(ids, outgoing = True, api_output_loc='temp/citations_li
 
 
 
-def get_pubmed_similar_docs(ids, top_n = 50):
-    """Given a list of pubmed ids, get the top_n most similar pubmed ids"""
+# def get_pubmed_similar_docs(ids, top_n = 50):
+#     """Given a list of pubmed ids, get the top_n most similar pubmed ids"""
+    
+#     Entrez.email = "amkrasakis@gmail.com"
+
+#     similar_ids = []
+
+#     for i,primary_id in enumerate(ids):
+#         handle = Entrez.elink(db="pubmed", id=primary_id, cmd="neighbor_score", rettype="xml")
+#         records = Entrez.read(handle)
+
+#         scores = sorted(records[0]['LinkSetDb'][0]['Link'], key=lambda k: int(k['Score']), reverse=True)
+#         similar_ids.extend(map(lambda x: x['Id'],scores[:top_n]))
+        
+#         time.sleep(.34) # do not send more than 3 requests/sec
+#         if i%100==0:
+#             print 'Getting %i most similar docs to doc %i...'%(top_n, i)
+            
+#     return list(set(similar_ids))
+
+
+def get_pubmed_similar_docs(ids, top_n = 25):
+    """Given a list of pubmed ids, get a dict of the top_n most similar pubmed ids,
+    along with their similarity scores"""
     
     Entrez.email = "amkrasakis@gmail.com"
 
-    similar_ids = []
+    similar_ids = {}
 
     for i,primary_id in enumerate(ids):
         handle = Entrez.elink(db="pubmed", id=primary_id, cmd="neighbor_score", rettype="xml")
         records = Entrez.read(handle)
 
         scores = sorted(records[0]['LinkSetDb'][0]['Link'], key=lambda k: int(k['Score']), reverse=True)
-        similar_ids.extend(map(lambda x: x['Id'],scores[:top_n]))
-        
+        ids = list(map(lambda x: x['Id'],scores[:top_n]))
+        scores = list(map(lambda x: int(x['Score']),scores[:top_n]))
+        similar_ids.update(dict(zip(ids,scores)))
+
+    #     similar_ids.extend(map(lambda x: x['Id'],scores[:top_n]))
+
         time.sleep(.34) # do not send more than 3 requests/sec
         if i%100==0:
             print 'Getting %i most similar docs to doc %i...'%(top_n, i)
-            
-    return list(set(similar_ids))
+
+    return similar_ids
