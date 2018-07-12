@@ -11,7 +11,56 @@ from sklearn.metrics import cohen_kappa_score, precision_score, accuracy_score, 
 from io import StringIO
 from imblearn.under_sampling import RandomUnderSampler
 
+import numpy as np
+from scipy.sparse import csr_matrix
 
+from random import sample
+
+
+def delete_from_csr(mat, row_indices=[], col_indices=[]):
+    """
+    Remove the rows (denoted by ``row_indices``) and columns (denoted by ``col_indices``) from the CSR sparse matrix ``mat``.
+    WARNING: Indices of altered axes are reset in the returned matrix
+    """
+    if not isinstance(mat, csr_matrix):
+        raise ValueError("works only for CSR format -- use .tocsr() first")
+
+    rows = []
+    cols = []
+    if row_indices:
+        rows = list(row_indices)
+    if col_indices:
+        cols = list(col_indices)
+
+    if len(rows) > 0 and len(cols) > 0:
+        row_mask = np.ones(mat.shape[0], dtype=bool)
+        row_mask[rows] = False
+        col_mask = np.ones(mat.shape[1], dtype=bool)
+        col_mask[cols] = False
+        return mat[row_mask][:,col_mask]
+    elif len(rows) > 0:
+        mask = np.ones(mat.shape[0], dtype=bool)
+        mask[rows] = False
+        return mat[mask]
+    elif len(cols) > 0:
+        mask = np.ones(mat.shape[1], dtype=bool)
+        mask[cols] = False
+        return mat[:,mask]
+    else:
+        return mat
+    
+    
+def sample_from_csr(L_unlab, percentage):
+    
+    indices = [i for i in range(L_unlab.shape[0])]
+    percentage = 1.-percentage
+    indices_to_del = sample(indices, int((L_unlab.shape[0])*percentage))
+    L_unlab_rs = delete_from_csr(L_unlab,indices_to_del)
+    
+    return L_unlab_rs
+
+
+    
 
 def report_to_df(report):
     report = re.sub(r" +", " ", report).replace("avg / total", "avg/total").replace("\n ", "\n")
@@ -190,7 +239,7 @@ def F1_positive_class(tp,fp,tn,fn):
     
 
 
-def balance_candidates(cands, marginals, rs = 42):
+def balance_candidates(cands, marginals, rs = 42, shuffle_cands=True, undersample=True):
     """Balance and shuffle candidates along with their (prob) labels.
     
     cands: list of candidate objects
@@ -200,10 +249,15 @@ def balance_candidates(cands, marginals, rs = 42):
     rus = RandomUnderSampler(random_state=rs,return_indices=True)
     marginals_01 = np.round(marginals)
 
-    _,_, indices = rus.fit_sample(pd.DataFrame(marginals), np.round(marginals))
-
-    # shuffle indices
-    indices = shuffle(indices, random_state = rs)
+    if undersample:
+        _,_, indices = rus.fit_sample(pd.DataFrame(marginals), np.round(marginals))
+    else:
+        indices = [i for i in range(len(cands))]
+        
+    if shuffle:
+        # shuffle indices
+        indices = shuffle(indices, random_state = rs)
+        
 
     # keep only selected items
     cands_us = [cands[i] for i in indices]
@@ -212,10 +266,13 @@ def balance_candidates(cands, marginals, rs = 42):
     return cands_us, np.array(marginals_us)
 
 
+
+
 #############################################################################
 #######   Helpers to convert to/from Snorkels -1,1 class label lists  #######
 #############################################################################
 
+    
 
 def get_positive_logit(logit_array, positive_logit_position=1):
     """Helper to get a list of logits/probabilities for the positive class 
@@ -245,10 +302,10 @@ def logits_to_bin_labels(logit_array):
 
 
 def bin_to_neg_labels(label_list):
-    return [-1 if x==0 else 1 for x in label_list]
+    return [-1 if x==0 else x for x in label_list]
 
 def neg_to_bin_labels(label_list):
-    return [0 if x==-1 else 1 for x in label_list]
+    return [0 if x==-1 else x for x in label_list]
 
 def classif_report_from_dicts(true_dict, pred_dict):
     ids = true_dict.keys()
@@ -293,3 +350,472 @@ def plot_marginals_histogram(pred_marginals, true_labels=None, bins=11, title=No
     else:
         print "Incorrect label mapping, ensure true_labels are within {0,1}"
         return
+    
+
+    
+import matplotlib.pyplot as plt
+def plot_learning_curve(train_scores, 
+                        valid_scores,
+                        train_sizes,
+                        title=None,
+                        ylim=None,):
+    """
+    Generate a simple plot of the test and training learning curve.
+
+    Parameters
+    ----------
+    estimator : object type that implements the "fit" and "predict" methods
+        An object of that type which is cloned for each validation.
+
+    title : string
+        Title for the chart.
+
+    X : array-like, shape (n_samples, n_features)
+        Training vector, where n_samples is the number of samples and
+        n_features is the number of features.
+
+    y : array-like, shape (n_samples) or (n_samples, n_features), optional
+        Target relative to X for classification or regression;
+        None for unsupervised learning.
+
+    ylim : tuple, shape (ymin, ymax), optional
+        Defines minimum and maximum yvalues plotted.
+
+    cv : int, cross-validation generator or an iterable, optional
+        Determines the cross-validation splitting strategy.
+        Possible inputs for cv are:
+          - None, to use the default 3-fold cross-validation,
+          - integer, to specify the number of folds.
+          - An object to be used as a cross-validation generator.
+          - An iterable yielding train/test splits.
+
+        For integer/None inputs, if ``y`` is binary or multiclass,
+        :class:`StratifiedKFold` used. If the estimator is not a classifier
+        or if ``y`` is neither binary nor multiclass, :class:`KFold` is used.
+
+        Refer :ref:`User Guide <cross_validation>` for the various
+        cross-validators that can be used here.
+
+    n_jobs : integer, optional
+        Number of jobs to run in parallel (default 1).
+    """
+    plt.figure()
+    if title:
+        plt.title(title)
+    if ylim is not None:
+        plt.ylim(*ylim)
+    plt.xlabel("Training examples")
+    plt.ylabel("Score")
+#     train_sizes, train_scores, test_scores = learning_curve(
+#         estimator, X, y, cv=cv, n_jobs=n_jobs, train_sizes=train_sizes)
+    train_scores_mean = np.mean(train_scores, axis=1)
+    train_scores_std = np.std(train_scores, axis=1)
+    test_scores_mean = np.mean(valid_scores, axis=1)
+    test_scores_std = np.std(valid_scores, axis=1)
+    plt.grid()
+
+    plt.fill_between(train_sizes, train_scores_mean - train_scores_std,
+                     train_scores_mean + train_scores_std, alpha=0.1,
+                     color="r")
+    plt.fill_between(train_sizes, test_scores_mean - test_scores_std,
+                     test_scores_mean + test_scores_std, alpha=0.1, color="g")
+    plt.plot(train_sizes, train_scores_mean, 'o-', color="r",
+             label="Training score")
+    plt.plot(train_sizes, test_scores_mean, 'o-', color="g",
+             label="Cross-validation score")
+
+    plt.legend(loc="best")
+    return plt
+
+
+
+#####################################################
+####                  Ensembles                ######       
+#####################################################
+
+
+import math
+from scipy import special
+import random
+import copy as cp
+
+
+class BrownBoost:
+    def __init__(self, base_estimator, c=10, convergence_criterion=0.0001, max_iter=10000):
+        """ Initiates BrownBoost classifier
+        
+        Parameters
+        ----------
+        base_estimator: classifier from scikit-learn
+            The base leaner in ensemble
+        c: int or float
+            A positive real value
+            default = 10
+        convergence_criterion: float
+            A small constant(>0) used to avoid degenerate cases.
+            default = 0.0001
+        """
+        self.base_estimator = base_estimator
+        self.c = c
+        self.max_iter = max_iter
+        self.max_iter_newton_raphson = max_iter / 100
+        self.convergence_criterion = convergence_criterion
+        self.alphas = []
+        self.hs = []
+        self.ss = []
+
+        
+    def get_params(self, deep=True):
+        # suppose this estimator has parameters "alpha" and "recursive"
+        return {"base_estimator": self.base_estimator, 
+                "c": self.c, "convergence_criterion": self.convergence_criterion,
+                "max_iter": self.max_iter,
+               }
+
+    def set_params(self, **parameters):
+        for parameter, value in parameters.items():
+            setattr(self, parameter, value)
+        return self
+    
+
+    def fit(self, X, y):
+        """ Trains the classifier
+        Parameters
+        ----------
+        X: ndarray
+            The training instances
+        y: ndarray
+            The target values for The training instances
+            
+        returns
+        --------
+            self
+        """
+
+        # Initiate parameters
+        self.__init__(base_estimator=self.base_estimator,
+                      c=self.c,
+                      max_iter=self.max_iter,
+                      convergence_criterion=self.convergence_criterion)
+
+        s = self.c
+        r = np.zeros(X.shape[0])
+        k = 0
+        while s >= 0 and k < self.max_iter :
+#             print(f'iter is {k}\ts = {s}')
+            self.ss.append(s)
+            k += 1
+            w = np.exp(-(r + s)**2 / self.c)
+
+            h = cp.deepcopy(self.base_estimator)
+            h.fit(X, y, sample_weight=w)
+            pred = h.predict(X)
+            
+            error = np.multiply(pred, y)
+            gamma = np.dot(w, error)
+
+            alpha, t = self.newton_raphson(r, error, s, gamma)
+#             theta = (0.1/self.c)**2
+#             A = 32 * math.sqrt(self.c*math.log(2/theta))
+#             if t < gamma**2/A:
+#                 (new_t * w).sum()
+#                 t = new_t + gamma**2/A
+
+            r += alpha * error
+            s -= t
+
+            self.alphas.append(alpha)
+            self.hs.append(h)
+
+    def predict(self, X):
+        """ Classify the samples
+        Parameters
+        ----------
+        X: ndarray
+            The test instances
+            
+        Returns
+        -------
+        y: ndarray
+            The pred with BrownBoost for the test instances
+        """
+
+        y = np.zeros(X.shape[0])
+        for i in range(0, len(self.hs)):
+            y += self.alphas[i] * self.hs[i].predict(X)
+        return np.sign(y)
+
+    def newton_raphson(self, r, error, s, gamma):
+        """ Computes alpha and t
+        Parameters
+        ----------
+        r: array
+            margins for the instances
+        error: ndarray
+            error vec between pred and true instances
+        s: float
+            'time remaining'
+        gamma: float
+            correlation
+        y: ndarray
+            the target values
+            
+        Retruns
+        -------
+        alpha: float
+        t: float
+        """
+
+        # Theorem 3 & 5
+        alpha = min([0.1, gamma])
+        t = (alpha**2) / 3
+
+        a = r + s
+        change_amount = self.convergence_criterion + 1
+        k = 0
+
+        while change_amount > self.convergence_criterion and k < self.max_iter_newton_raphson:
+            d = a + alpha * error - t
+            w = np.exp(-d**2 / self.c)
+
+            # Coefficients for jacobian
+            W = w.sum()
+            U = (w * d * error).sum()
+            B = (w * error).sum()
+#             if abs(B) < 0.001:
+#                 break
+            V = (w * d * error**2).sum()
+            E = (special.erf(d / math.sqrt(self.c)) - special.erf(a / math.sqrt(self.c))).sum()
+
+            sqrt_pi_c = math.sqrt(math.pi * self.c)
+            denominator = 2*(V*W - U*B)
+            alpha_step = (self.c*W*B + sqrt_pi_c*U*E)/denominator
+            t_step = (self.c*B*B + sqrt_pi_c*V*E)/denominator
+
+            alpha += alpha_step
+            t += t_step
+            change_amount = math.sqrt(alpha_step**2 + t_step**2)
+#             print(f'\t newton_raphson iter is {k}, {change_amount}')
+            k += 1
+        
+        return alpha, t
+    
+    
+class RobustBoost:
+    def __init__(self, base_estimator, epsilon=0.25, theta=1.0, sigma=0.1, max_iter=10000):
+        """ Initiates BrownBoost classifier
+
+        Parameters
+        ----------
+        base_estimator: classifier from scikit-learn
+            The base leaner in ensemble
+        c: int or float
+            A positive real value
+            default = 10
+        convergence_criterion: float
+            A small constant(>0) used to avoid degenerate cases.
+            default = 0.0001
+        """
+        self.base_estimator = base_estimator
+        self.epsilon = epsilon
+        self.theta = theta
+        self.sigma = sigma
+        self.max_iter = max_iter
+        self.alphas = []
+        self.hs = []
+        self.ss = []
+        self.rho = 0.
+        
+        
+    def get_params(self, deep=True):
+        # suppose this estimator has parameters "alpha" and "recursive"
+        return {"base_estimator": self.base_estimator, 
+                "epsilon": self.epsilon, "theta": self.theta,
+               "sigma": self.sigma, "max_iter": self.max_iter,               
+               }
+
+    def set_params(self, **parameters):
+        for parameter, value in parameters.items():
+            setattr(self, parameter, value)
+        return self
+    
+    
+    def fit(self, X, y):
+        """ Trains the classifier
+        Parameters
+        ----------
+        X: ndarray
+            The training instances
+        y: ndarray
+            The target values for The training instances
+
+        returns
+        --------
+            self
+        """
+
+        # Initiate parameters
+        self.__init__(base_estimator=self.base_estimator,
+                      epsilon=self.epsilon,
+                      theta=self.theta,
+                      sigma=self.sigma,
+                      max_iter=self.max_iter)
+
+        m_t = 0.
+        m_t_old = 0.
+        m_last_ds = 0
+        m_last_dt = 0
+
+        # equation 8
+        self.rho = self._calculate_rho()
+
+        while t < 1:
+            m_weights_old = cp.deepcopy(m_weights)
+            m_t_old = m_t
+
+            h = cp.deepcopy(self.base_estimator)
+            h.fit(X, y, sample_weight=w)
+            pred = h.predict(X)
+
+            if 1 - m_t < 0.001:
+                continue
+
+            # prepare for using NewtonRaphson
+            foundSolution = false
+            mask = np.where(pred == 1, True, False)
+            ns = NewronRaphsonSolver(self.m_t, mask, value)
+
+            # 1. go as far in the future as possible
+            init_dt = 1 - m_t
+            init_ds = math.sqrt(init_dt)
+            initial_points = []
+            initial_points.append([init_ds, init_dt])
+
+            # 2. alpha in adaboost
+            m_w = [0., 0.]
+            EPS = 1e-7
+            totalWeight = m_w[0] + m_w[1]
+            if (totalWeight == 0.0 or math.abs(totalWeight) < EPS or math.abs(m_w[0] - m_w[1]) < EPS):
+                init_ds = 0
+            else:
+                init_ds = 0.5 * math.log((m_w[1] + 0.5) / (m_w[0] + 0.5))
+
+            init_dt = init_ds ** 2
+            initial_points.append([init_ds, init_dt])
+
+            # 3. most recently used
+            init_ds = m_ds_last
+            init_dt = m_dt_last
+            initial_points.append([init_ds, init_dt])
+
+    def _calculate_rho(self):
+        """Calculate rho
+        Returns
+        -------
+        rho: [float, float]
+        """
+        f1 = math.sqrt(np.exp(2.) * ((self.sigma**2 + 1.) - 1.))
+        f2 = special.erfinv(1. - self.epsilon)
+        numerator = f1*f2 + np.e * self.theta
+        denominator = 2.*(np.e - 1.)
+        return numerator/denominator
+    
+    def _calculate_weight(self, cost, m, t):
+        mu = self._calculate_mu(self.rho, t)
+        sigma_sq = self._calculate_sigma_square(t)
+        if m > mu:
+            return cost*np.exp(-(m - mu)**2 / sigma_sq)
+        else:
+            return 0.0
+        
+    def _calculate_sigma_square(self, t):
+        if t > 1:
+            return self.sigma**2
+        else:
+            return (self.sigma**2 + 1.) * np.exp(2. * (1. - t)) - 1.
+    
+    def _calculate_mu(self, t):
+        if t > 1:
+            return self.sigma
+        else:
+            return (self.theta - 2*self.rho) * np.exp(1. - t) + 2*self.rho
+        
+
+#####################################################
+######            Learning curves              ######       
+#####################################################
+
+
+def plot_learning_curve(train_scores, 
+                        valid_scores,
+                        train_sizes,
+                        title=None,
+                        ylim=None,):
+    """
+    Generate a simple plot of the test and training learning curve.
+
+    Parameters
+    ----------
+    estimator : object type that implements the "fit" and "predict" methods
+        An object of that type which is cloned for each validation.
+
+    title : string
+        Title for the chart.
+
+    X : array-like, shape (n_samples, n_features)
+        Training vector, where n_samples is the number of samples and
+        n_features is the number of features.
+
+    y : array-like, shape (n_samples) or (n_samples, n_features), optional
+        Target relative to X for classification or regression;
+        None for unsupervised learning.
+
+    ylim : tuple, shape (ymin, ymax), optional
+        Defines minimum and maximum yvalues plotted.
+
+    cv : int, cross-validation generator or an iterable, optional
+        Determines the cross-validation splitting strategy.
+        Possible inputs for cv are:
+          - None, to use the default 3-fold cross-validation,
+          - integer, to specify the number of folds.
+          - An object to be used as a cross-validation generator.
+          - An iterable yielding train/test splits.
+
+        For integer/None inputs, if ``y`` is binary or multiclass,
+        :class:`StratifiedKFold` used. If the estimator is not a classifier
+        or if ``y`` is neither binary nor multiclass, :class:`KFold` is used.
+
+        Refer :ref:`User Guide <cross_validation>` for the various
+        cross-validators that can be used here.
+
+    n_jobs : integer, optional
+        Number of jobs to run in parallel (default 1).
+    """
+    plt.figure()
+    if title:
+        plt.title(title)
+    if ylim is not None:
+        plt.ylim(*ylim)
+    plt.xlabel("Training examples")
+    plt.ylabel("Score")
+#     train_sizes, train_scores, test_scores = learning_curve(
+#         estimator, X, y, cv=cv, n_jobs=n_jobs, train_sizes=train_sizes)
+    train_scores_mean = np.mean(train_scores, axis=1)
+    train_scores_std = np.std(train_scores, axis=1)
+    test_scores_mean = np.mean(valid_scores, axis=1)
+    test_scores_std = np.std(valid_scores, axis=1)
+    plt.grid()
+
+    plt.fill_between(train_sizes, train_scores_mean - train_scores_std,
+                     train_scores_mean + train_scores_std, alpha=0.1,
+                     color="r")
+    plt.fill_between(train_sizes, test_scores_mean - test_scores_std,
+                     test_scores_mean + test_scores_std, alpha=0.1, color="g")
+    plt.plot(train_sizes, train_scores_mean, 'o-', color="r",
+             label="Training score")
+    plt.plot(train_sizes, test_scores_mean, 'o-', color="g",
+             label="Cross-validation score")
+
+    plt.legend(loc="best")
+    return plt
+
