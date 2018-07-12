@@ -46,3 +46,7 @@ tutorials/tables/data/hardware/
 *.pkl
 nohup.out
 *.hdf5
+
+
+# temp files
+helpers/temp/*
