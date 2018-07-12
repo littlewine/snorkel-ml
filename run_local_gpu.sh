@@ -1,7 +1,6 @@
 # Set & move to home directory
 
 # Activate nvidia gpu
-sudo ls
 sudo prime-select nvidia
 sudo prime-select intel
 optirun nvidia-smi
