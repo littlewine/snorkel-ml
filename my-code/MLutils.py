@@ -745,7 +745,6 @@ class RobustBoost:
 ######            Learning curves              ######       
 #####################################################
 
-
 def plot_learning_curve(train_scores, 
                         valid_scores,
                         train_sizes,
