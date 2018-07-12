@@ -12,7 +12,8 @@ from io import StringIO
 from imblearn.under_sampling import RandomUnderSampler
 
 import numpy as np
-from scipy.sparse import csr_matrix
+from scipy.sparse import csr_matrix,vstack
+
 
 from random import sample
 
@@ -818,3 +819,127 @@ def plot_learning_curve(train_scores,
     plt.legend(loc="best")
     return plt
 
+from sklearn.model_selection import KFold, train_test_split
+from sklearn.metrics import mean_squared_error, f1_score, precision_recall_fscore_support
+from sklearn.utils import shuffle
+from copy import deepcopy
+
+def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val, 
+                          X_init = None, y_init=None,
+                          X_test=None, y_test=None, cv_splits=3, 
+                          splt_sizes = np.array([ 0.1, 0.33, 0.55, 0.78, 1.]),
+                          fit_params = {} ):
+    """Custom function for returning learning curve scores of different classifiers. 
+    Learning curve starts from initial training set (X_init) making sure it is always
+    included in the training process and then samples incrementally over X_increm.
+    Evaluates loss & F1 on X_val, y_val and (optionally) returns P,R,F1 on test set (X_test)
+    
+    clf: estimator,implementing 'fit/train' and 'predict/predictions' methods
+    X_init: the training dataset on beginning of the learning curve (spot 0)
+    X_increm: the additional examples for plotting incremental learning curves
+    
+    returns: train_sizes, train_mse, train_f1, valid_mse , valid_f1 , (P, R, F1) @ test set
+    """
+    # X_splt: subset of the training dataset
+    # X_merged: X_init + X_splt | full training dataset to perform training on that iteration
+
+    #init
+    train_mse = np.empty((0,1), float)
+    train_f1 = np.empty((0,1), float)
+    valid_mse = np.empty((0,cv_splits), float)
+    valid_f1 = np.empty((0,cv_splits), float)
+    #shuffle 
+    X_increm, y_increm = shuffle(X_increm, y_increm)
+    
+    
+    y_init,y_increm = np.array(neg_to_bin_labels(y_init)), np.array(neg_to_bin_labels(y_increm)) #ensure labels are {0,1}
+    y_val, y_test = np.array(neg_to_bin_labels(y_val)) , np.array(neg_to_bin_labels(y_test))
+    
+    kf = KFold(n_splits=3, random_state=42, shuffle=True) # KFold splitter for CV in valid set
+    
+    if X_init is not None:
+        X_init, y_init = shuffle(X_init, y_init)
+        if y_init is None:
+            raise ValueError("Must also pass labels for the initial training set")
+        splt_sizes[0] = 0  # force training to start from ONLY gold set
+        train_sizes = len(y_init)+(splt_sizes)*len(y_increm)
+
+    for splt_size in splt_sizes:
+        if splt_size == 1: #hack because sklearn complains if test size == 0
+            leave_out_size = 2
+        elif splt_size ==0:
+            leave_out_size = len(y_increm) - 2
+        else:
+            leave_out_size = 1.-splt_size
+
+        # Get a sample out of the 'increm' training set
+        X_splt, _, y_splt, _ = train_test_split(X_increm, y_increm, test_size = leave_out_size, 
+                                                      shuffle = True, 
+                                                      stratify = y_increm, 
+                                                      random_state=42)
+        if X_init!=None: #augment X_init with X_splt
+            X_merged = vstack((X_init, X_splt))
+            y_merged = np.concatenate((y_init,y_splt))
+        else: #perform training only with X_merged 
+            X_merged = deepcopy(X_splt), deepcopy(y_splt) 
+
+        # and shuffle
+        X_merged,y_merged = shuffle(X_merged,y_merged, random_state=42)
+
+        # training
+        try:
+            clf.fit(X_merged,y_merged, **fit_params)
+#             print "Training X_merged with shape",X_merged.shape
+        except:
+            clf.train(X_merged,y_merged, **fit_params) # TODO: add fit_params?
+        
+        # calc training errors
+        try:
+            pred = clf.predict(X_merged)
+        except:
+            pred = clf.predictions(X_merged)
+#         print 'F1 of train set',f1_score(y_merged,pred)
+        
+        train_mse = np.vstack([train_mse, -mean_squared_error(y_merged,pred)])
+        train_f1 = np.vstack([train_f1, f1_score(y_merged,pred)])
+#         train_mse.append(-mean_squared_error(y_merged,pred))
+#         f1_train.append(f1_score(y_merged,pred))
+        
+        
+        #compute CV sets on validation to plot variance too
+        
+        mse,f1 = [],[]
+        for train_index, test_index in kf.split(X_val):
+            X, y = X_val[test_index], y_val[test_index]
+            pred = clf.predict(X)
+#             print X.shape
+            mse.append(-mean_squared_error(y,pred))
+            f1.append(f1_score(y,pred))
+        mse = np.array(mse)
+        f1 = np.array(f1) 
+#         print mse
+        valid_mse = np.vstack([valid_mse, mse])
+        valid_f1 = np.vstack([valid_f1, f1])
+
+
+        #compute PRF on test set
+        if X_test!=None:
+            try:
+                pred = clf.predict(X_test)
+            except:
+                pred = clf.predictions(X_test)
+            p,r,f1,_ = precision_recall_fscore_support(y_test, pred, average = 'binary')
+            test_prf1 = (p,r,f1)
+        else:
+            test_prf1 = (None,None,None)
+        
+        #ensure that runs ok
+#         print 'Curve @ %s : \n%s\n\n'%(X_merged.shape, valid_f1)
+
+    train_sizes = np.array([int(i) for i in train_sizes])
+    
+#     try:
+#         print "Completed %s training in %.2f sec"%( clf.__class__ , time.time() - st_time)
+#     except:
+#         pass
+    return train_sizes, train_mse, train_f1, valid_mse , valid_f1 , test_prf1
