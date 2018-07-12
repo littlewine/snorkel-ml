@@ -1,0 +1,6 @@
+Unlabelled contains all abstracts with similarity score > 5e7 (compared to train/validation set)
+
+	train 1326
+	unlabelled 5650
+	test_gs 800
+	validation 306

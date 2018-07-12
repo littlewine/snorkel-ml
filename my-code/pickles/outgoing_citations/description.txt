@@ -1,0 +1,6 @@
+Unlabelled contains the outgoing citations of the gold set.
+
+	test_gs 800
+	train 1326
+	validation 306
+	unlabelled 22251

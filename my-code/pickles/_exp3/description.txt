@@ -1,0 +1,7 @@
+Train is a subset (400 docs) of original training set.
+Unlabelled contains the rest of the training set.
+
+	test_gs 800
+	train 400
+	validation 306
+	unlabelled 926
