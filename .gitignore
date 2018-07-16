@@ -50,3 +50,4 @@ nohup.out
 
 # temp files
 helpers/temp/*
+*.csv
