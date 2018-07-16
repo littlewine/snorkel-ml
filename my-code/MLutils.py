@@ -302,11 +302,16 @@ def logits_to_bin_labels(logit_array):
     return list(map(lambda x: 1 if x[1]>=0.5 else 0, logit_array))
 
 
+def prob_to_bin_labels(label_list):
+    return np.array([0 if x<0.5 else 1 for x in label_list])
+
 def bin_to_neg_labels(label_list):
-    return [-1 if x==0 else x for x in label_list]
+    return np.array([-1 if x==0 else x for x in label_list])
 
 def neg_to_bin_labels(label_list):
-    return [0 if x==-1 else x for x in label_list]
+#     return [0 if x==-1 else x for x in label_list]
+    return np.array([0 if x==-1 else x for x in label_list])
+
 
 def classif_report_from_dicts(true_dict, pred_dict):
     ids = true_dict.keys()
@@ -819,7 +824,7 @@ def plot_learning_curve(train_scores,
     plt.legend(loc="best")
     return plt
 
-from sklearn.model_selection import KFold, train_test_split
+from sklearn.model_selection import KFold, ShuffleSplit
 from sklearn.metrics import mean_squared_error, f1_score, precision_recall_fscore_support
 from sklearn.utils import shuffle
 from copy import deepcopy
@@ -848,12 +853,17 @@ def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val,
     train_f1 = np.empty((0,1), float)
     valid_mse = np.empty((0,cv_splits), float)
     valid_f1 = np.empty((0,cv_splits), float)
+    
+    # TODO: split y_increm, y_increm_marginals ||| OR do smth with train test split
+    # TODO: use shufflesplit instead???
+    
     #shuffle 
     X_increm, y_increm = shuffle(X_increm, y_increm)
     
-    
-    y_init,y_increm = np.array(neg_to_bin_labels(y_init)), np.array(neg_to_bin_labels(y_increm)) #ensure labels are {0,1}
-    y_val, y_test = np.array(neg_to_bin_labels(y_val)) , np.array(neg_to_bin_labels(y_test))
+    #ensure labels are {0,1}
+    y_init,y_increm = np.array(neg_to_bin_labels(y_init)).astype(float), np.array(neg_to_bin_labels(y_increm)).astype(float) 
+    y_val, y_test = np.array(neg_to_bin_labels(y_val)).astype(float) , np.array(neg_to_bin_labels(y_test)).astype(float)
+    print np.unique(np.concatenate(( y_init,y_increm, y_val, y_test)))
     
     kf = KFold(n_splits=3, random_state=42, shuffle=True) # KFold splitter for CV in valid set
     
@@ -865,30 +875,59 @@ def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val,
         train_sizes = len(y_init)+(splt_sizes)*len(y_increm)
 
     for splt_size in splt_sizes:
-        if splt_size == 1: #hack because sklearn complains if test size == 0
-            leave_out_size = 2
-        elif splt_size ==0:
-            leave_out_size = len(y_increm) - 2
-        else:
-            leave_out_size = 1.-splt_size
+        #### with train_test_split
+#         if splt_size == 1: #hack because sklearn complains if test size == 0
+#             leave_out_size = 2
+#         elif splt_size ==0:
+#             leave_out_size = len(y_increm) - 1
+#         else:
+#             leave_out_size = 1.-splt_size
+    
+#         # Get a sample out of the 'increm' training set
+#         X_splt, _, y_splt, _ = train_test_split(X_increm, y_increm, test_size = leave_out_size, 
+#                                                       shuffle = True, 
+#                                                       stratify = y_increm, 
+#                                                       random_state=42)
 
-        # Get a sample out of the 'increm' training set
-        X_splt, _, y_splt, _ = train_test_split(X_increm, y_increm, test_size = leave_out_size, 
-                                                      shuffle = True, 
-                                                      stratify = y_increm, 
-                                                      random_state=42)
+        
+        #### with shufflesplit 
+        #hack because sklearn complains if test size == 0
+        if splt_size == 1:
+            train_size = len(y_increm)-2
+        elif splt_size ==0:
+            train_size = 2
+        else: 
+            train_size = splt_size
+            
+        splitter = ShuffleSplit(n_splits=1, test_size=None, train_size=train_size, random_state=42)
+        ind = list(splitter.split(X_increm))[0][0]
+        print type(ind), type(X_increm)
+        if isinstance(X_increm,list):
+            X_splt = [X_increm[i] for i in ind]
+        else:
+            X_splt = X_increm[ind]
+        y_splt = y_increm[ind]
+        
+        
         if X_init!=None: #augment X_init with X_splt
-            X_merged = vstack((X_init, X_splt))
+            if isinstance(X_init,list):
+                X_merged = X_init+X_splt
+            else:
+                X_merged = vstack((X_init, X_splt))
             y_merged = np.concatenate((y_init,y_splt))
         else: #perform training only with X_merged 
             X_merged = deepcopy(X_splt), deepcopy(y_splt) 
 
         # and shuffle
         X_merged,y_merged = shuffle(X_merged,y_merged, random_state=42)
-
+        y_merged_bin = np.array(prob_to_bin_labels(y_merged)).astype(int)
+        
+        print y_merged_bin
         # training
+        clf.fit(X_merged,y_merged_bin )
         try:
-            clf.fit(X_merged,y_merged, **fit_params)
+            
+            clf.fit(X_merged,y_merged_bin )
 #             print "Training X_merged with shape",X_merged.shape
         except:
             clf.train(X_merged,y_merged, **fit_params) # TODO: add fit_params?
@@ -897,12 +936,21 @@ def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val,
         try:
             pred = clf.predict(X_merged)
         except:
-            pred = clf.predictions(X_merged)
-        print 'F1 of train set',f1_score(y_merged,pred)
-        print 'preds:', pred
+            pred = clf.predictions(X_merged, batch_size=1024) #TODO: fix batch size for all LSTMs
+#         pred = neg_to_bin_labels(pred)
         
-        train_mse = np.vstack([train_mse, -mean_squared_error(y_merged,pred)])
-        train_f1 = np.vstack([train_f1, f1_score(y_merged,pred)])
+        pred = np.array(neg_to_bin_labels(pred)).astype(int)
+#         y_merged_eval = np.array(pred).astype(float)
+#         # TODO: need to -> np.round
+#         y_merged_eval = np.array(pred).astype(float)
+        
+#         y_merged_eval = logits_to_bin_labels(y_merged)
+        
+        
+        print 'pred values',np.unique(pred)
+        print 'y merged eval',np.unique(y_merged_bin)
+        train_mse = np.vstack([train_mse, -mean_squared_error(y_merged_bin,pred)])
+        train_f1 = np.vstack([train_f1, f1_score(y_merged_bin,pred)])
 #         train_mse.append(-mean_squared_error(y_merged,pred))
 #         f1_train.append(f1_score(y_merged,pred))
         
@@ -911,13 +959,19 @@ def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val,
         
         mse,f1 = [],[]
         for train_index, test_index in kf.split(X_val):
-            X, y = X_val[test_index], y_val[test_index]
+#             print type(X_val), type(test_index)
+            if isinstance(X_val, list):
+                X = [X_val[i] for i in test_index]
+            else:
+                X = X_val[test_index]
+            y = y_val[test_index]
             try:
                 pred = clf.predict(X)
             except:
                 # TODO: probably not that simple - need shuffling cands
                 pred = clf.predictions(X)
 #             print X.shape
+            pred = neg_to_bin_labels(pred)
             mse.append(-mean_squared_error(y,pred))
             f1.append(f1_score(y,pred))
         mse = np.array(mse)
@@ -933,6 +987,7 @@ def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val,
                 pred = clf.predict(X_test)
             except:
                 pred = clf.predictions(X_test)
+            pred = neg_to_bin_labels(pred)
             p,r,f1,_ = precision_recall_fscore_support(y_test, pred, average = 'binary')
             test_prf1 = (p,r,f1)
         else:

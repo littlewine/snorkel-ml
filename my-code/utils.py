@@ -176,3 +176,13 @@ def merge_pickles_pred_dicts(pickle_list, f1_threshold=0):
 
     print 'Merged %i different pipeline variations'%len(results_merged)
     return results_merged
+
+
+##########################################
+#####           Minor stuff         ######
+##########################################
+
+def keep_cands(df,ids_to_keep):
+    """Keep only specific ids out of a dataframe (based on index)"""
+    ids_to_drop = set(df.index) - set(ids_to_keep)
+    return df.drop(ids_to_drop)
