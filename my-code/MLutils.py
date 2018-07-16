@@ -898,7 +898,8 @@ def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val,
             pred = clf.predict(X_merged)
         except:
             pred = clf.predictions(X_merged)
-#         print 'F1 of train set',f1_score(y_merged,pred)
+        print 'F1 of train set',f1_score(y_merged,pred)
+        print 'preds:', pred
         
         train_mse = np.vstack([train_mse, -mean_squared_error(y_merged,pred)])
         train_f1 = np.vstack([train_f1, f1_score(y_merged,pred)])
@@ -911,7 +912,11 @@ def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val,
         mse,f1 = [],[]
         for train_index, test_index in kf.split(X_val):
             X, y = X_val[test_index], y_val[test_index]
-            pred = clf.predict(X)
+            try:
+                pred = clf.predict(X)
+            except:
+                # TODO: probably not that simple - need shuffling cands
+                pred = clf.predictions(X)
 #             print X.shape
             mse.append(-mean_squared_error(y,pred))
             f1.append(f1_score(y,pred))

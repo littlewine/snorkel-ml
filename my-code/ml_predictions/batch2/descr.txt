@@ -1,4 +1,0 @@
-This batch of predictions had several bugs:
-
-- TFidf results were not saved (confused names with CV)
-- trimming window was applied to all classifiers (candidate_dict destruction)

@@ -1,4 +1,3 @@
-experiment_name = '25similar'
 print "Setting up variables & DB connection for experiment:\n"
 print "*******************\n%s\n*******************"%experiment_name
 
