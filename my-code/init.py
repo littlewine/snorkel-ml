@@ -1,3 +1,5 @@
+experiment_name = '_exp3'
+# experiment_name = '25similar' 
 print "Setting up variables & DB connection for experiment:\n"
 print "*******************\n%s\n*******************"%experiment_name
 
