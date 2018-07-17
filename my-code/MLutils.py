@@ -283,7 +283,7 @@ def get_positive_logit(logit_array, positive_logit_position=1):
            [0,1]]
            Output: [0,1,1]
     """
-    return list(map(lambda x: x[positive_logit_position], logit_array))
+    return np.array(map(lambda x: x[positive_logit_position], logit_array))
 
 def logits_to_neg_labels(logit_array):
     """Input: [[0.93, 0.07],
@@ -291,7 +291,7 @@ def logits_to_neg_labels(logit_array):
        [0,1]]
        Output: [-1,1,1]
     """
-    return list(map(lambda x: 1 if x[1]>=0.5 else -1, logit_array))
+    return np.array(map(lambda x: 1 if x[1]>=0.5 else -1, logit_array))
 
 def logits_to_bin_labels(logit_array):
     """Input: [[1, 0],
@@ -299,7 +299,7 @@ def logits_to_bin_labels(logit_array):
            [0,1]]
            Output: [0,1,1]
     """
-    return list(map(lambda x: 1 if x[1]>=0.5 else 0, logit_array))
+    return np.array(map(lambda x: 1 if x[1]>=0.5 else 0, logit_array))
 
 
 def prob_to_bin_labels(label_list):
@@ -829,6 +829,18 @@ from sklearn.metrics import mean_squared_error, f1_score, precision_recall_fscor
 from sklearn.utils import shuffle
 from copy import deepcopy
 
+
+def calculate_predictions(clf, X):
+    """Shortcut for calculating predictions and their probabilities for sklearn & snorkel RNN"""
+    try:
+        pred = clf.predict(X)
+        positive_position = clf.classes_.argmax()
+        pred_marg = get_positive_logit(clf.predict_proba(X), positive_position)
+    except:
+        pred = clf.predictions(X, batch_size=1024)
+        pred_marg = clf.marginals(X, batch_size=1024)
+    return pred,pred_marg
+
 def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val, 
                           X_init = None, y_init=None,
                           X_test=None, y_test=None, cv_splits=3, 
@@ -854,6 +866,13 @@ def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val,
     valid_mse = np.empty((0,cv_splits), float)
     valid_f1 = np.empty((0,cv_splits), float)
     
+    #set probability estimates to true
+    try:
+        clf.probability = True
+    except:
+        print 'Cannot set probability estimates to True'
+        pass
+    
     # TODO: split y_increm, y_increm_marginals ||| OR do smth with train test split
     # TODO: use shufflesplit instead???
     
@@ -875,22 +894,6 @@ def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val,
         train_sizes = len(y_init)+(splt_sizes)*len(y_increm)
 
     for splt_size in splt_sizes:
-        #### with train_test_split
-#         if splt_size == 1: #hack because sklearn complains if test size == 0
-#             leave_out_size = 2
-#         elif splt_size ==0:
-#             leave_out_size = len(y_increm) - 1
-#         else:
-#             leave_out_size = 1.-splt_size
-    
-#         # Get a sample out of the 'increm' training set
-#         X_splt, _, y_splt, _ = train_test_split(X_increm, y_increm, test_size = leave_out_size, 
-#                                                       shuffle = True, 
-#                                                       stratify = y_increm, 
-#                                                       random_state=42)
-
-        
-        #### with shufflesplit 
         #hack because sklearn complains if test size == 0
         if splt_size == 1:
             train_size = len(y_increm)-2
@@ -924,82 +927,51 @@ def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val,
         
         print y_merged_bin
         # training
-        clf.fit(X_merged,y_merged_bin )
         try:
             
-            clf.fit(X_merged,y_merged_bin )
+            clf.fit(X_merged,y_merged_bin)
 #             print "Training X_merged with shape",X_merged.shape
         except:
-            clf.train(X_merged,y_merged, **fit_params) # TODO: add fit_params?
+            clf.train(X_merged,y_merged, **fit_params)
         
         # calc training errors
-        try:
-            pred = clf.predict(X_merged)
-        except:
-            pred = clf.predictions(X_merged, batch_size=1024) #TODO: fix batch size for all LSTMs
-#         pred = neg_to_bin_labels(pred)
-        
-        pred = np.array(neg_to_bin_labels(pred)).astype(int)
-#         y_merged_eval = np.array(pred).astype(float)
-#         # TODO: need to -> np.round
-#         y_merged_eval = np.array(pred).astype(float)
-        
-#         y_merged_eval = logits_to_bin_labels(y_merged)
-        
+        pred,pred_marg = calculate_predictions(clf, X_merged)
+        pred = np.array(neg_to_bin_labels(pred)).astype(int) # Don't think thats needed : TODO: clean-up
         
         print 'pred values',np.unique(pred)
         print 'y merged eval',np.unique(y_merged_bin)
-        train_mse = np.vstack([train_mse, -mean_squared_error(y_merged_bin,pred)])
-        train_f1 = np.vstack([train_f1, f1_score(y_merged_bin,pred)])
-#         train_mse.append(-mean_squared_error(y_merged,pred))
-#         f1_train.append(f1_score(y_merged,pred))
-        
+        train_mse = np.vstack([train_mse, -mean_squared_error(y_merged,pred_marg)])
+        train_f1 = np.vstack([train_f1, f1_score(y_merged_bin,pred)])        
         
         #compute CV sets on validation to plot variance too
-        
         mse,f1 = [],[]
         for train_index, test_index in kf.split(X_val):
-#             print type(X_val), type(test_index)
             if isinstance(X_val, list):
                 X = [X_val[i] for i in test_index]
             else:
                 X = X_val[test_index]
             y = y_val[test_index]
-            try:
-                pred = clf.predict(X)
-            except:
-                # TODO: probably not that simple - need shuffling cands
-                pred = clf.predictions(X)
-#             print X.shape
+            
+            pred, pred_marg = calculate_predictions(clf, X_val)
             pred = neg_to_bin_labels(pred)
-            mse.append(-mean_squared_error(y,pred))
-            f1.append(f1_score(y,pred))
+            
+            mse.append(-mean_squared_error(y_val,pred_marg))
+            f1.append(f1_score(y_val,pred))
         mse = np.array(mse)
-        f1 = np.array(f1) 
-#         print mse
+        f1 = np.array(f1)
         valid_mse = np.vstack([valid_mse, mse])
         valid_f1 = np.vstack([valid_f1, f1])
 
 
         #compute PRF on test set
         if X_test!=None:
-            try:
-                pred = clf.predict(X_test)
-            except:
-                pred = clf.predictions(X_test)
+            pred, pred_marg = calculate_predictions(clf, X_test)
             pred = neg_to_bin_labels(pred)
             p,r,f1,_ = precision_recall_fscore_support(y_test, pred, average = 'binary')
             test_prf1 = (p,r,f1)
         else:
             test_prf1 = (None,None,None)
         
-        #ensure that runs ok
-#         print 'Curve @ %s : \n%s\n\n'%(X_merged.shape, valid_f1)
-
     train_sizes = np.array([int(i) for i in train_sizes])
     
-#     try:
-#         print "Completed %s training in %.2f sec"%( clf.__class__ , time.time() - st_time)
-#     except:
-#         pass
     return train_sizes, train_mse, train_f1, valid_mse , valid_f1 , test_prf1
