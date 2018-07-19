@@ -52,3 +52,5 @@ nohup.out
 # temp files
 helpers/temp/*
 *.csv
+*.txt
+my-code/CNN-text-classification-keras/*
