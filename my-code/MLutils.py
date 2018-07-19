@@ -745,18 +745,27 @@ class RobustBoost:
             return (self.theta - 2*self.rho) * np.exp(1. - t) + 2*self.rho
 
 
+def average_vote(L):
+    avg_vote_labels = np.array(list(map(lambda x:x[0].item(),L.mean(axis=1))))
+    avg_vote_labels = (avg_vote_labels/2)+0.5 # 
+    return avg_vote_labels
+
 def majority_vote(L):
     '''Compute majority vote given a Label matrix L'''
-    pred = L.sum(axis=1)
-    pred[(pred > 0).nonzero()[0]] = 1
-    pred[(pred < 0).nonzero()[0]] = 0
-    pred = np.array(list(map(lambda x: x[0].item(), pred)))
-    return pred
+    avg_vote_labels = average_vote(L)
+    maj_vote_labels = np.array(list(map(lambda x: 1 if x>0.5 else 0 if x<0.5 else x , avg_vote_labels)))
+    return maj_vote_labels
+    
+#     pred = L.sum(axis=1)
+#     pred[(pred > 0).nonzero()[0]] = 1
+#     pred[(pred < 0).nonzero()[0]] = 0
+#     pred = np.array(list(map(lambda x: x[0].item(), pred)))
+#     return pred
 
 def majority_vote_score(L, gold_labels):
     
-    y_pred = np.ravel(majority_vote(L))
-    y_true = gold_labels.todense()
+    y_pred = np.round(np.ravel(majority_vote(L)))
+    y_true = neg_to_bin_labels(gold_labels.toarray().reshape(1,-1)[0])
     y_true = [1 if y_true[i] == 1 else 0 for i in range(y_true.shape[0])]
     
     pos,neg = y_true.count(1),float(y_true.count(0))
@@ -766,12 +775,6 @@ def majority_vote_score(L, gold_labels):
     print "f1         {:.2f}".format( 100 * f1_score(y_true, y_pred) )
     #print "accuracy  {:.2f}".format( 100 * accuracy_score(y_true, y_pred) 
     
-def average_vote(L):
-    
-    avg_vote_labels = np.array(list(map(lambda x:x[0].item(),L.mean(axis=1))))
-    avg_vote_labels = (avg_vote_labels/2)+0.5 # 
-    return avg_vote_labels
-
 
 #####################################################
 ######            Learning curves              ######       
