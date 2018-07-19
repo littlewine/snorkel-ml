@@ -329,7 +329,7 @@ def plot_marginals_histogram(pred_marginals, true_labels=None, bins=11, title=No
     """Plots a histogram with red and green bars based on whether the marginals were correctly/incorrectly assigned.
     Make sure true_labels is {0,1}
     """
-    if not true_labels:
+    if true_labels is None:
         plt.hist(pred_marginals, bins=bins)
         if title:
             plt.title(title)
@@ -912,7 +912,7 @@ def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val,
         y_splt = y_increm[ind]
         
         
-        if X_init!=None: #augment X_init with X_splt
+        if X_init is not None: #augment X_init with X_splt
             if isinstance(X_init,list):
                 X_merged = X_init+X_splt
             else:
@@ -925,12 +925,10 @@ def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val,
         X_merged,y_merged = shuffle(X_merged,y_merged, random_state=42)
         y_merged_bin = np.array(prob_to_bin_labels(y_merged)).astype(int)
         
-        print y_merged_bin
         # training
         try:
             
             clf.fit(X_merged,y_merged_bin)
-#             print "Training X_merged with shape",X_merged.shape
         except:
             clf.train(X_merged,y_merged, **fit_params)
         
@@ -938,25 +936,25 @@ def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val,
         pred,pred_marg = calculate_predictions(clf, X_merged)
         pred = np.array(neg_to_bin_labels(pred)).astype(int) # Don't think thats needed : TODO: clean-up
         
-        print 'pred values',np.unique(pred)
-        print 'y merged eval',np.unique(y_merged_bin)
         train_mse = np.vstack([train_mse, -mean_squared_error(y_merged,pred_marg)])
-        train_f1 = np.vstack([train_f1, f1_score(y_merged_bin,pred)])        
+        train_f1 = np.vstack([train_f1, f1_score(y_merged_bin,pred)])
         
         #compute CV sets on validation to plot variance too
         mse,f1 = [],[]
-        for train_index, test_index in kf.split(X_val):
-            if isinstance(X_val, list):
-                X = [X_val[i] for i in test_index]
+        for train_index, test_index in kf.split(X_test):
+            if isinstance(X_test, list):
+                X = [X_test[i] for i in test_index]
             else:
-                X = X_val[test_index]
-            y = y_val[test_index]
+                X = X_test[test_index]
+            y = y_test[test_index]
             
-            pred, pred_marg = calculate_predictions(clf, X_val)
+            pred, pred_marg = calculate_predictions(clf, X)
             pred = neg_to_bin_labels(pred)
             
-            mse.append(-mean_squared_error(y_val,pred_marg))
-            f1.append(f1_score(y_val,pred))
+            mse.append(-mean_squared_error(y,pred_marg))
+            f1.append(f1_score(y,pred))
+            print "MSE:", mse
+            print "F1:", f1
         mse = np.array(mse)
         f1 = np.array(f1)
         valid_mse = np.vstack([valid_mse, mse])
