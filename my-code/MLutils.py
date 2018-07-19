@@ -4,14 +4,12 @@ import seaborn, pickle, re
 import pandas as pd
 import numpy as np
 
-from sklearn.metrics import classification_report,confusion_matrix
 from sklearn.utils import shuffle
-from sklearn.metrics import cohen_kappa_score, precision_score, accuracy_score, f1_score
-
+from sklearn.metrics import classification_report,confusion_matrix
+from sklearn.metrics import cohen_kappa_score, precision_score, accuracy_score, f1_score, recall_score, mean_squared_error, precision_recall_fscore_support
 from io import StringIO
 from imblearn.under_sampling import RandomUnderSampler
 
-import numpy as np
 from scipy.sparse import csr_matrix,vstack
 
 
@@ -745,7 +743,35 @@ class RobustBoost:
             return self.sigma
         else:
             return (self.theta - 2*self.rho) * np.exp(1. - t) + 2*self.rho
-        
+
+
+def majority_vote(L):
+    '''Compute majority vote given a Label matrix L'''
+    pred = L.sum(axis=1)
+    pred[(pred > 0).nonzero()[0]] = 1
+    pred[(pred < 0).nonzero()[0]] = 0
+    pred = np.array(list(map(lambda x: x[0].item(), pred)))
+    return pred
+
+def majority_vote_score(L, gold_labels):
+    
+    y_pred = np.ravel(majority_vote(L))
+    y_true = gold_labels.todense()
+    y_true = [1 if y_true[i] == 1 else 0 for i in range(y_true.shape[0])]
+    
+    pos,neg = y_true.count(1),float(y_true.count(0))
+    print "pos/neg    {:d}:{:d} {:.1f}%/{:.1f}%".format(int(pos), int(neg), pos/(pos+neg)*100, neg/(pos+neg)*100)
+    print "precision  {:.2f}".format( 100 * precision_score(y_true, y_pred) )
+    print "recall     {:.2f}".format( 100 * recall_score(y_true, y_pred) )
+    print "f1         {:.2f}".format( 100 * f1_score(y_true, y_pred) )
+    #print "accuracy  {:.2f}".format( 100 * accuracy_score(y_true, y_pred) 
+    
+def average_vote(L):
+    
+    avg_vote_labels = np.array(list(map(lambda x:x[0].item(),L.mean(axis=1))))
+    avg_vote_labels = (avg_vote_labels/2)+0.5 # 
+    return avg_vote_labels
+
 
 #####################################################
 ######            Learning curves              ######       
@@ -758,7 +784,9 @@ def plot_learning_curve(train_scores,
                         ylim=None,):
     """
     Generate a simple plot of the test and training learning curve.
-
+    
+    # from: http://scikit-learn.org/stable/auto_examples/model_selection/plot_learning_curve.html
+    
     Parameters
     ----------
     estimator : object type that implements the "fit" and "predict" methods
@@ -825,8 +853,6 @@ def plot_learning_curve(train_scores,
     return plt
 
 from sklearn.model_selection import KFold, ShuffleSplit
-from sklearn.metrics import mean_squared_error, f1_score, precision_recall_fscore_support
-from sklearn.utils import shuffle
 from copy import deepcopy
 
 
