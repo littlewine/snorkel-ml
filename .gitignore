@@ -44,6 +44,7 @@ tutorials/tables/data/hardware/
 *.zip
 *.tar.gz
 *.pkl
+.pkl.bz2
 nohup.out
 *.hdf5
 
