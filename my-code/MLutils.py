@@ -356,6 +356,29 @@ def plot_marginals_histogram(pred_marginals, true_labels=None, bins=11, title=No
         return
     
 
+def error_analysis(L_dev, L_gold_dev, gen_model=None, majority_voting = False, average_voting = False):
+    """Given a vote matrix and the ground truth labels, 
+    perform an error analysis on the dev set. 
+    gen_model is provided for combining vote labels (denoising). 
+    If not provided, performs majority voting & error analysis on that """
+    
+    if gen_model is not None:
+        dev_marginals = gen_model.marginals(L_dev)
+    elif majority_voting:
+        dev_marginals = majority_vote(L_dev)
+    elif average_voting:
+        dev_marginals = average_vote(L_dev)
+    else:
+        raise ValueError("Have to provide a way for denoising/combining labels")
+
+    if isinstance(L_gold_dev,csr_matrix):
+        dev_gold_lbls = neg_to_bin_labels(list(map(lambda x: int(x[0].item()),L_gold_dev.todense())))
+    else:
+        dev_gold_lbls = neg_to_bin_labels(L_gold_dev)
+
+    return plot_marginals_histogram(dev_marginals,dev_gold_lbls ,
+                             title = 'Histogram of marginals in val set' ,
+                            bins = 11)
     
 import matplotlib.pyplot as plt
 def plot_learning_curve(train_scores, 
@@ -763,18 +786,39 @@ def majority_vote(L):
 #     return pred
 
 def majority_vote_score(L, gold_labels):
+    """Computes the majority vote score of label matrix L.
+    Resolves 50-50 conflicts as negative labels.
     
+    Prints scores & returns (P,R,F) tuple"""
     y_pred = np.round(np.ravel(majority_vote(L)))
     y_true = neg_to_bin_labels(gold_labels.toarray().reshape(1,-1)[0])
     y_true = [1 if y_true[i] == 1 else 0 for i in range(y_true.shape[0])]
+    
+    ### TODO: change score to the same used by snorkel:
+    # ========================================
+    # Scores (Un-adjusted)
+    # ========================================
+    # Pos. class accuracy: 0.708
+    # Neg. class accuracy: 0.866
+    # Precision            0.597
+    # Recall               0.708
+    # F1                   0.648
+    # ----------------------------------------
+    # TP: 503 | FP: 339 | TN: 2193 | FN: 207
+    # ========================================
     
     pos,neg = y_true.count(1),float(y_true.count(0))
     print "pos/neg    {:d}:{:d} {:.1f}%/{:.1f}%".format(int(pos), int(neg), pos/(pos+neg)*100, neg/(pos+neg)*100)
     print "precision  {:.2f}".format( 100 * precision_score(y_true, y_pred) )
     print "recall     {:.2f}".format( 100 * recall_score(y_true, y_pred) )
     print "f1         {:.2f}".format( 100 * f1_score(y_true, y_pred) )
-    #print "accuracy  {:.2f}".format( 100 * accuracy_score(y_true, y_pred) 
     
+    #print "accuracy  {:.2f}".format( 100 * accuracy_score(y_true, y_pred) 
+    return (precision_score(y_true, y_pred) , 
+             recall_score(y_true, y_pred),
+            f1_score(y_true, y_pred)
+           )
+
 
 #####################################################
 ######            Learning curves              ######       
