@@ -11,9 +11,10 @@ from io import StringIO
 from imblearn.under_sampling import RandomUnderSampler
 
 from scipy.sparse import csr_matrix,vstack
-
-
 from random import sample
+
+import matplotlib.lines as mlines
+import matplotlib.patches as mpatches
 
 
 def delete_from_csr(mat, row_indices=[], col_indices=[]):
@@ -99,8 +100,9 @@ def sort_list_on(lst, like):
 
 
 ##########################################
-######   Explore model diversity    ######
+######     Classifier selection     ######
 ##########################################
+
 def diversity_matrix(results_dict, diagonal_key = False , metric = cohen_kappa_score, evaluate_on = 'label_val_prob+'):
     """Compute a diversity matrix based on a specific metric
     
@@ -176,6 +178,98 @@ def diversity_heatmap(results_dict, title=None, figsize = (10, 10), evaluate_on=
     if title:
         plt.title(title)
     return seaborn.heatmap(diversity_df,mask = mask,vmin=0,vmax=1,annot=True,cmap='Blues')
+
+
+# Helpers for "naming the models in visualization"
+
+def get_trims(x):
+    if 'trim=0' in x:
+        return 'trim=0'
+    elif 'trim=5' in x:
+        return 'trim=5'
+    elif 'ShortDepPath' in x:
+        return 'ShortDepPath'
+    else:
+        return 'no_trim'
+    
+def get_model(x):
+    if 'SVC_rbf' in x:
+        return 'SVC_rbf'
+    elif 'SVC_linear' in x:
+        return 'SVC_linear'
+    elif 'RandomForestClassifier' in x:
+        return 'RandomForestClassifier'
+    elif 'LogisticRegression' in x:
+        return 'LogisticRegression'
+    elif 'CNN' in x:
+        return 'CNN'
+    elif 'LSTM' in x:
+        return 'LSTM'
+    else:
+        return 'other'
+
+def get_representation(x):
+    if 'CV' in x:
+        return "CountVectorizer"
+    elif 'TfIdf' in x:
+        return 'TfIdf'
+    else:
+        return 'other'
+
+
+
+def visualize_classifiers(X_tsne, cat_var1 = 'model', cat_var2 = 'trimming' , style = 'ggplot'):
+    """2-D Visualization with options for two categorical values
+    
+    X: should contain columns 'x' and 'y'
+    cat_var1
+    """
+    # enrich df with categorical vars
+    X_tsne['trimming'] = map(lambda x: get_trims(x),X_tsne.index)
+    X_tsne['model'] = map(lambda x: get_model(x),X_tsne.index)
+    X_tsne['representation'] = map(lambda x: get_representation(x),X_tsne.index)
+    
+    cat1i = np.unique(X_tsne[cat_var1])
+    cat2i = np.unique(X_tsne[cat_var2])
+    
+    plt.figure(figsize=(10,10))
+    plt.style.use(style)
+    markers = ['.','D','_','+','x','.','H', '<','p','*','h','D','d','1','v','']
+    colors = plt.cm.Set1.colors
+    color_patches, marker_patches = [], []
+
+    for j, cat2 in enumerate(cat2i):
+        marker_patches.append(mlines.Line2D([], [], color='black', marker=markers[j], linestyle='None',
+                          markersize=4, label=cat2) )
+
+    for i, cat1 in enumerate(cat1i):
+        color_patches.append(mpatches.Patch(color=colors[i], label=cat1))
+
+        for j, cat2 in enumerate(cat2i):
+            for x,y in  X_tsne[(X_tsne[cat_var1]==cat1) & (X_tsne[cat_var2]==cat2)][['x','y']].values:
+                plt.scatter(x, y, 
+                            color=colors[i],marker=markers[j])
+
+
+    # plt.legend(handles=color_patches, ncol=2, loc=2, bbox_to_anchor=(1.05, 1),)
+    # plt.legend(handles=marker_patches, ncol=2, loc=2, bbox_to_anchor=(1.05, 1),)
+
+
+
+    legend1 = plt.legend(handles=color_patches, ncol=1, loc=2, bbox_to_anchor=(1.05, 1),)
+    plt.legend(handles=marker_patches, ncol=1, loc=3, bbox_to_anchor=(1.05, 0),)
+    plt.gca().add_artist(legend1)
+    plt.title("Visualization of different classifiers based on their predictions")
+    return plt
+
+    # plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.,ncol=2);
+
+
+
+
+
+
+
 
 
 
