@@ -235,7 +235,7 @@ def visualize_classifiers(X_tsne, cat_var1 = 'model', cat_var2 = 'trimming' , st
     plt.figure(figsize=(10,10))
     plt.style.use(style)
     markers = ['.','D','_','+','x','.','H', '<','p','*','h','D','d','1','v','']
-    colors = plt.cm.Set1.colors
+    colors = plt.cm.tab20.colors
     color_patches, marker_patches = [], []
 
     for j, cat2 in enumerate(cat2i):
@@ -265,12 +265,35 @@ def visualize_classifiers(X_tsne, cat_var1 = 'model', cat_var2 = 'trimming' , st
     # plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.,ncol=2);
 
 
+from scipy.spatial import distance
+def centroid_selection(X, clusterer):
+    """X should contain x,y columns with the tSNE projections
+    clusterer 
+    """
+    picked_models = []
+    clusterer.fit_predict(X[['x','y']])
+    
+    for center in clusterer.cluster_centers_:
+        print center
+        closest_index = distance.cdist(center.reshape(-1,2), X[['x','y']]).argmin()
+        picked_models.append(X.index[closest_index])
+    return picked_models
 
 
-
-
-
-
+def pick_centroid_models(X, clusterer):
+    """X is feature matrix for clustering.
+    clusterer is cluster instance implementing .fit_predict and .cluster_centers_
+    """
+    picked_models = []
+    try:
+        clusterer.fit_predict(X)
+    except:
+        clusterer.fit_transform(X)
+    
+    for center in clusterer.cluster_centers_:
+        closest_index = distance.cdist(center.reshape(-1,len(X)), X).argmin()
+        picked_models.append(X.index[closest_index])
+    return picked_models
 
 
 def reduce_results_dict(results_dict, your_keys):
@@ -420,7 +443,7 @@ def classif_report_from_dicts(true_dict, pred_dict):
 def plot_marginals_histogram(pred_marginals, true_labels=None, bins=11, title=None):
     """Plots a histogram with red and green bars based on whether the marginals were correctly/incorrectly assigned.
     Make sure true_labels is {0,1}
-    """
+    """    
     if true_labels is None:
         plt.hist(pred_marginals, bins=bins)
         if title:
@@ -434,17 +457,27 @@ def plot_marginals_histogram(pred_marginals, true_labels=None, bins=11, title=No
         for i in range(len(pred_marginals)):
             if abs(pred_marginals[i]-true_labels[i]) > 0.5: # then its falsely assigned from the GM
                 false_marginals.append(pred_marginals[i])
-            else:
-                true_marginals.append(pred_marginals[i])
-        
+            elif abs(pred_marginals[i]-true_labels[i]) < 0.5:
+                true_marginals.append(pred_marginals[i]) 
+            else: #randomly assign in 50-50 disaggreement
+                if bool(random.getrandbits(1)):
+                    true_marginals.append(pred_marginals[i]) 
+                else:
+                    false_marginals.append(pred_marginals[i])
+
+        # add legends
+        red_patch = mpatches.Patch(color='red', label='Misclassified')
+        green_patch = mpatches.Patch(color='green', label='Correctly classified')
+        plt.legend(handles=[green_patch, red_patch])
+
         #Calculate F1 score to add on title
         preds = np.round(pred_marginals)
         f1 = f1_score(true_labels, preds)*100
         
         plt.hist([true_marginals,false_marginals], bins=bins, range=[0,1], color=['green', 'red'])
         plt.title("Correctly vs incorrectly assigned marginals: %i/%i, F1: %.2f%%"%(len(true_marginals),len(false_marginals), f1))
-        plt.show()
-        return
+        
+        return plt
     else:
         print "Incorrect label mapping, ensure true_labels are within {0,1}"
         return
@@ -902,16 +935,13 @@ def majority_vote_score(L, gold_labels):
     # ========================================
     
     pos,neg = y_true.count(1),float(y_true.count(0))
-    print "pos/neg    {:d}:{:d} {:.1f}%/{:.1f}%".format(int(pos), int(neg), pos/(pos+neg)*100, neg/(pos+neg)*100)
-    print "precision  {:.2f}".format( 100 * precision_score(y_true, y_pred) )
-    print "recall     {:.2f}".format( 100 * recall_score(y_true, y_pred) )
-    print "f1         {:.2f}".format( 100 * f1_score(y_true, y_pred) )
+#     print "pos/neg    {:d}:{:d} {:.1f}%/{:.1f}%".format(int(pos), int(neg), pos/(pos+neg)*100, neg/(pos+neg)*100)
+#     print "precision  {:.2f}".format( 100 * precision_score(y_true, y_pred) )
+#     print "recall     {:.2f}".format( 100 * recall_score(y_true, y_pred) )
+#     print "f1         {:.2f}".format( 100 * f1_score(y_true, y_pred) )
     
     #print "accuracy  {:.2f}".format( 100 * accuracy_score(y_true, y_pred) 
-    return (precision_score(y_true, y_pred) , 
-             recall_score(y_true, y_pred),
-            f1_score(y_true, y_pred)
-           )
+    return "Precision\t{:.2f}%\nRecall\t{:.2f}%\nF1\t{:.2f}%".format( 100 * precision_score(y_true, y_pred),  100 * recall_score(y_true, y_pred) ,  100 * f1_score(y_true, y_pred)  )
 
 
 #####################################################
