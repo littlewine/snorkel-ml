@@ -440,7 +440,7 @@ def classif_report_from_dicts(true_dict, pred_dict):
 ####                  Diagnostics              ######       
 #####################################################
 
-def plot_marginals_histogram(pred_marginals, true_labels=None, bins=11, title=None):
+def plot_marginals_histogram(pred_marginals, true_labels=None, bins=11, title=None, save_name = None):
     """Plots a histogram with red and green bars based on whether the marginals were correctly/incorrectly assigned.
     Make sure true_labels is {0,1}
     """    
@@ -472,18 +472,19 @@ def plot_marginals_histogram(pred_marginals, true_labels=None, bins=11, title=No
 
         #Calculate F1 score to add on title
         preds = np.round(pred_marginals)
-        f1 = f1_score(true_labels, preds)*100
+#         f1 = f1_score(true_labels, preds)*100
         
         plt.hist([true_marginals,false_marginals], bins=bins, range=[0,1], color=['green', 'red'])
-        plt.title("Correctly vs incorrectly assigned marginals: %i/%i, F1: %.2f%%"%(len(true_marginals),len(false_marginals), f1))
-        
-        return plt
+        plt.title("Correctly vs incorrectly assigned marginals: %i/%i"%(len(true_marginals),len(false_marginals) ))
+        if save_name is not None:
+            plt.savefig(save_name)
+        return 
     else:
         print "Incorrect label mapping, ensure true_labels are within {0,1}"
         return
     
 
-def error_analysis(L_dev, L_gold_dev, gen_model=None, majority_voting = False, average_voting = False):
+def error_analysis(L_dev, L_gold_dev, gen_model=None, majority_voting = False, average_voting = False, save_name = None):
     """Given a vote matrix and the ground truth labels, 
     perform an error analysis on the dev set. 
     gen_model is provided for combining vote labels (denoising). 
@@ -505,7 +506,9 @@ def error_analysis(L_dev, L_gold_dev, gen_model=None, majority_voting = False, a
 
     return plot_marginals_histogram(dev_marginals,dev_gold_lbls ,
                              title = 'Histogram of marginals in val set' ,
-                            bins = 11)
+                            bins = 11,
+                            save_name = save_name
+                                   )
     
 import matplotlib.pyplot as plt
 def plot_learning_curve(train_scores, 
@@ -897,7 +900,8 @@ class RobustBoost:
 
 def average_vote(L):
     avg_vote_labels = np.array(list(map(lambda x:x[0].item(),L.mean(axis=1))))
-    avg_vote_labels = (avg_vote_labels/2)+0.5 # 
+    avg_vote_labels = (avg_vote_labels/2)+0.5 # convert to {0,1}
+    avg_vote_labels = np.clip(avg_vote_labels,0,1) # rounding errors
     return avg_vote_labels
 
 def majority_vote(L):
@@ -941,7 +945,9 @@ def majority_vote_score(L, gold_labels):
 #     print "f1         {:.2f}".format( 100 * f1_score(y_true, y_pred) )
     
     #print "accuracy  {:.2f}".format( 100 * accuracy_score(y_true, y_pred) 
-    return "Precision\t{:.2f}%\nRecall\t{:.2f}%\nF1\t{:.2f}%".format( 100 * precision_score(y_true, y_pred),  100 * recall_score(y_true, y_pred) ,  100 * f1_score(y_true, y_pred)  )
+#     return "Precision\t{:.2f}%\nRecall\t{:.2f}%\nF1\t{:.2f}%".format( 100 * precision_score(y_true, y_pred),  100 * recall_score(y_true, y_pred) ,  100 * f1_score(y_true, y_pred)  )
+    return (precision_score(y_true, y_pred),  recall_score(y_true, y_pred) ,  f1_score(y_true, y_pred)  )
+
 
 
 #####################################################
