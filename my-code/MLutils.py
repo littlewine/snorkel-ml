@@ -1044,6 +1044,17 @@ def calculate_predictions(clf, X):
         pred_marg = clf.marginals(X, batch_size=1024)
     return pred,pred_marg
 
+
+def labels_to_array(L_gold):
+    """Converts label lists & sparse matrices to np arrays """
+    if isinstance(L_gold,csr_matrix):
+        return np.array(list(map(lambda x: int(x[0].item()),L_gold.todense())))
+    else:
+        return np.array(L_gold)
+
+def fix_lc_labels(lbls):
+    return np.array(neg_to_bin_labels(labels_to_array(lbls))).astype(float) 
+
 def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val, 
                           X_init = None, y_init=None,
                           X_test=None, y_test=None, cv_splits=3, 
@@ -1081,10 +1092,13 @@ def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val,
     
     #shuffle 
     X_increm, y_increm = shuffle(X_increm, y_increm)
+        
+    #ensure labels are {0,1}    
+    y_init = fix_lc_labels(y_init)
+    y_val = fix_lc_labels(y_val)
+    y_test = fix_lc_labels(y_test)
     
-    #ensure labels are {0,1}
-    y_init,y_increm = np.array(neg_to_bin_labels(y_init)).astype(float), np.array(neg_to_bin_labels(y_increm)).astype(float) 
-    y_val, y_test = np.array(neg_to_bin_labels(y_val)).astype(float) , np.array(neg_to_bin_labels(y_test)).astype(float)
+#     y_val, y_test = np.array(neg_to_bin_labels(y_val)).astype(float) , np.array(neg_to_bin_labels(y_test)).astype(float)
     print np.unique(np.concatenate(( y_init,y_increm, y_val, y_test)))
     
     kf = KFold(n_splits=3, random_state=42, shuffle=True) # KFold splitter for CV in valid set
