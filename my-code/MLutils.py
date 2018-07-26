@@ -1074,6 +1074,7 @@ def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val,
     # X_splt: subset of the training dataset
     # X_merged: X_init + X_splt | full training dataset to perform training on that iteration
 
+    
     #init
     train_mse = np.empty((0,1), float)
     train_f1 = np.empty((0,1), float)
@@ -1086,6 +1087,9 @@ def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val,
     except:
         print 'Cannot set probability estimates to True'
         pass
+    
+    # copy clf so I can re-initialize with random weights
+    clf_init = deepcopy(clf)
     
     # TODO: split y_increm, y_increm_marginals ||| OR do smth with train test split
     # TODO: use shufflesplit instead???
@@ -1111,6 +1115,9 @@ def custom_learning_curve(clf, X_increm, y_increm, X_val, y_val,
         train_sizes = len(y_init)+(splt_sizes)*len(y_increm)
 
     for splt_size in splt_sizes:
+        
+        clf = deepcopy(clf_init) #reload clf (re-initialize weights of lstm etc)
+        
         #hack because sklearn complains if test size == 0
         if splt_size == 1:
             train_size = len(y_increm)-2
