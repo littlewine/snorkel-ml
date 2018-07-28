@@ -511,6 +511,16 @@ def error_analysis(L_dev, L_gold_dev, gen_model=None, majority_voting = False, a
                                    )
     
 import matplotlib.pyplot as plt
+
+def get_lower_upper_CI(scores):
+    if scores.shape[1]>1: #then 2-D
+        print "2D"
+        lower_bound, upper_bound = DescrStatsW(valid_f1.T).tconfint_mean() - valid_f1.mean(axis=1)
+    else: 
+        print "1D"
+        lower_bound, upper_bound = 0, 0
+    return abs(lower_bound)
+
 def plot_learning_curve(train_scores, 
                         valid_scores,
                         train_sizes,
@@ -565,20 +575,28 @@ def plot_learning_curve(train_scores,
     plt.ylabel("Score")
 #     train_sizes, train_scores, test_scores = learning_curve(
 #         estimator, X, y, cv=cv, n_jobs=n_jobs, train_sizes=train_sizes)
+
+    #change this with t-test
     train_scores_mean = np.mean(train_scores, axis=1)
-    train_scores_std = np.std(train_scores, axis=1)
-    test_scores_mean = np.mean(valid_scores, axis=1)
-    test_scores_std = np.std(valid_scores, axis=1)
+    #train_scores_std = np.std(train_scores, axis=1)
+    train_scores_CI = get_lower_upper_CI(train_scores)
+    
+    
+    valid_scores_mean = np.mean(valid_scores, axis=1)
+    valid_scores_CI = get_lower_upper_CI(valid_scores)
+    print valid_scores_CI
+    #valid_scores_std = np.std(valid_scores, axis=1)
+    
     plt.grid()
 
-    plt.fill_between(train_sizes, train_scores_mean - train_scores_std,
-                     train_scores_mean + train_scores_std, alpha=0.1,
+    plt.fill_between(train_sizes, train_scores_mean - train_scores_CI,
+                     train_scores_mean + train_scores_CI, alpha=0.1,
                      color="r")
-    plt.fill_between(train_sizes, test_scores_mean - test_scores_std,
-                     test_scores_mean + test_scores_std, alpha=0.1, color="g")
+    plt.fill_between(train_sizes, valid_scores_mean - valid_scores_CI,
+                     valid_scores_mean + valid_scores_CI, alpha=0.1, color="g")
     plt.plot(train_sizes, train_scores_mean, 'o-', color="r",
              label="Training score")
-    plt.plot(train_sizes, test_scores_mean, 'o-', color="g",
+    plt.plot(train_sizes, valid_scores_mean, 'o-', color="g",
              label="Cross-validation score")
 
     plt.legend(loc="best")
