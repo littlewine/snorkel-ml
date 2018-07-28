@@ -15,6 +15,7 @@ from random import sample
 
 import matplotlib.lines as mlines
 import matplotlib.patches as mpatches
+from statsmodels.stats.weightstats import DescrStatsW
 
 
 def delete_from_csr(mat, row_indices=[], col_indices=[]):
@@ -512,96 +513,6 @@ def error_analysis(L_dev, L_gold_dev, gen_model=None, majority_voting = False, a
     
 import matplotlib.pyplot as plt
 
-def get_lower_upper_CI(scores):
-    if scores.shape[1]>1: #then 2-D
-        print "2D"
-        lower_bound, upper_bound = DescrStatsW(valid_f1.T).tconfint_mean() - valid_f1.mean(axis=1)
-    else: 
-        print "1D"
-        lower_bound, upper_bound = 0, 0
-    return abs(lower_bound)
-
-def plot_learning_curve(train_scores, 
-                        valid_scores,
-                        train_sizes,
-                        title=None,
-                        ylim=None,):
-    """
-    Generate a simple plot of the test and training learning curve.
-
-    Parameters
-    ----------
-    estimator : object type that implements the "fit" and "predict" methods
-        An object of that type which is cloned for each validation.
-
-    title : string
-        Title for the chart.
-
-    X : array-like, shape (n_samples, n_features)
-        Training vector, where n_samples is the number of samples and
-        n_features is the number of features.
-
-    y : array-like, shape (n_samples) or (n_samples, n_features), optional
-        Target relative to X for classification or regression;
-        None for unsupervised learning.
-
-    ylim : tuple, shape (ymin, ymax), optional
-        Defines minimum and maximum yvalues plotted.
-
-    cv : int, cross-validation generator or an iterable, optional
-        Determines the cross-validation splitting strategy.
-        Possible inputs for cv are:
-          - None, to use the default 3-fold cross-validation,
-          - integer, to specify the number of folds.
-          - An object to be used as a cross-validation generator.
-          - An iterable yielding train/test splits.
-
-        For integer/None inputs, if ``y`` is binary or multiclass,
-        :class:`StratifiedKFold` used. If the estimator is not a classifier
-        or if ``y`` is neither binary nor multiclass, :class:`KFold` is used.
-
-        Refer :ref:`User Guide <cross_validation>` for the various
-        cross-validators that can be used here.
-
-    n_jobs : integer, optional
-        Number of jobs to run in parallel (default 1).
-    """
-    plt.figure()
-    if title:
-        plt.title(title)
-    if ylim is not None:
-        plt.ylim(*ylim)
-    plt.xlabel("Training examples")
-    plt.ylabel("Score")
-#     train_sizes, train_scores, test_scores = learning_curve(
-#         estimator, X, y, cv=cv, n_jobs=n_jobs, train_sizes=train_sizes)
-
-    #change this with t-test
-    train_scores_mean = np.mean(train_scores, axis=1)
-    #train_scores_std = np.std(train_scores, axis=1)
-    train_scores_CI = get_lower_upper_CI(train_scores)
-    
-    
-    valid_scores_mean = np.mean(valid_scores, axis=1)
-    valid_scores_CI = get_lower_upper_CI(valid_scores)
-    print valid_scores_CI
-    #valid_scores_std = np.std(valid_scores, axis=1)
-    
-    plt.grid()
-
-    plt.fill_between(train_sizes, train_scores_mean - train_scores_CI,
-                     train_scores_mean + train_scores_CI, alpha=0.1,
-                     color="r")
-    plt.fill_between(train_sizes, valid_scores_mean - valid_scores_CI,
-                     valid_scores_mean + valid_scores_CI, alpha=0.1, color="g")
-    plt.plot(train_sizes, train_scores_mean, 'o-', color="r",
-             label="Training score")
-    plt.plot(train_sizes, valid_scores_mean, 'o-', color="g",
-             label="Cross-validation score")
-
-    plt.legend(loc="best")
-    return plt
-
 
 
 #####################################################
@@ -972,16 +883,25 @@ def majority_vote_score(L, gold_labels):
 ######            Learning curves              ######       
 #####################################################
 
+
+def get_lower_upper_CI(scores):
+    if scores.shape[1]>1: #then 2-D
+        lower_bound, upper_bound = DescrStatsW(scores.T).tconfint_mean() - scores.mean(axis=1)
+    else: 
+        lower_bound, upper_bound = 0, 0
+    return abs(lower_bound)
+
+
+
 def plot_learning_curve(train_scores, 
                         valid_scores,
                         train_sizes,
                         title=None,
-                        ylim=None,):
+                        ylim=None,
+                       epochs=None):
     """
     Generate a simple plot of the test and training learning curve.
-    
-    # from: http://scikit-learn.org/stable/auto_examples/model_selection/plot_learning_curve.html
-    
+
     Parameters
     ----------
     estimator : object type that implements the "fit" and "predict" methods
@@ -1028,24 +948,65 @@ def plot_learning_curve(train_scores,
     plt.ylabel("Score")
 #     train_sizes, train_scores, test_scores = learning_curve(
 #         estimator, X, y, cv=cv, n_jobs=n_jobs, train_sizes=train_sizes)
+    
+    def scale_epochs(epochs):
+        epochs1 = np.array(epochs)
+        return np.interp(epochs1, (epochs1.min(), epochs1.max()), (10, 50))
+    
+    if epochs is not None:
+        epochs_scaled = scale_epochs(epochs)
+        
+    else: 
+        epochs_scaled = None
+    #change this with t-test
     train_scores_mean = np.mean(train_scores, axis=1)
-    train_scores_std = np.std(train_scores, axis=1)
-    test_scores_mean = np.mean(valid_scores, axis=1)
-    test_scores_std = np.std(valid_scores, axis=1)
+    train_scores_CI = get_lower_upper_CI(train_scores)
+    
+    valid_scores_mean = np.mean(valid_scores, axis=1)
+    valid_scores_CI = get_lower_upper_CI(valid_scores)
+    
     plt.grid()
-
-    plt.fill_between(train_sizes, train_scores_mean - train_scores_std,
-                     train_scores_mean + train_scores_std, alpha=0.1,
+    plt.plot(train_sizes, train_scores_mean - 0,color="r") #draw line
+    plt.fill_between(train_sizes, train_scores_mean - train_scores_CI,
+                     train_scores_mean + train_scores_CI, alpha=0.2,
                      color="r")
-    plt.fill_between(train_sizes, test_scores_mean - test_scores_std,
-                     test_scores_mean + test_scores_std, alpha=0.1, color="g")
-    plt.plot(train_sizes, train_scores_mean, 'o-', color="r",
-             label="Training score")
-    plt.plot(train_sizes, test_scores_mean, 'o-', color="g",
-             label="Cross-validation score")
+    plt.plot(train_sizes, train_scores_mean, '-', color="r",
+             label="Train score")
+    plt.scatter(train_sizes, train_scores_mean, marker = 'o', color="r",
+             s=epochs_scaled)
+    
+    plt.fill_between(train_sizes, valid_scores_mean - valid_scores_CI,
+                     valid_scores_mean + valid_scores_CI, alpha=0.2, color="g")
+    
+    plt.plot(train_sizes, valid_scores_mean, '-', color="g",
+             label="Test score")
+    plt.scatter(train_sizes, valid_scores_mean, marker='o', color="g",
+             s=epochs_scaled)
 
-    plt.legend(loc="best")
+    legend0 = plt.legend(loc='lower right')
+    plt.ylim(0,1)
+    
+    legend2 = plt.legend([mlines.Line2D([],[],color='g',alpha=3*0.2 )] ,
+                         ["95% CI"] ,
+                         loc='upper right')
+    
+    if epochs is not None:
+        patches = []
+        for i,legend_size in enumerate(np.sort(np.unique(epochs))):
+            patches.append( plt.scatter([],[], s=legend_size, marker='o', color='#555555'))
+
+        legend1 = plt.legend(patches,
+               ['%i epochs'%epoch for epoch in np.unique(np.sort(epochs))],
+               scatterpoints=1,
+               loc='lower left',
+               ncol=2,
+               fontsize=8)
+        
+    plt.gca().add_artist(legend0)
+    plt.gca().add_artist(legend2)
+
     return plt
+
 
 from sklearn.model_selection import KFold, ShuffleSplit
 from copy import deepcopy
