@@ -896,9 +896,11 @@ def get_lower_upper_CI(scores):
 def plot_learning_curve(train_scores, 
                         valid_scores,
                         train_sizes,
-                        title=None,
-                        ylim=None,
-                       epochs=None):
+                        title = None,
+                        ylim = None,
+                       epochs = None,
+                       xlabel = None, ylabel = None
+                       ):
     """
     Generate a simple plot of the test and training learning curve.
 
@@ -944,8 +946,14 @@ def plot_learning_curve(train_scores,
         plt.title(title)
     if ylim is not None:
         plt.ylim(*ylim)
-    plt.xlabel("Training examples")
-    plt.ylabel("Score")
+    if xlabel is not None:
+        plt.xlabel(xlabel)
+    else:
+        plt.xlabel("Training examples")
+    if ylabel is not None:
+        plt.ylabel(ylabel)
+    else:
+        plt.ylabel("Score")
 #     train_sizes, train_scores, test_scores = learning_curve(
 #         estimator, X, y, cv=cv, n_jobs=n_jobs, train_sizes=train_sizes)
     
