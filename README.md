@@ -13,16 +13,6 @@ The code is based on [**snorkel _v0.6.2_**](https://github.com/HazyResearch/snor
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
-## Learning how to use Snorkel
-The [introductory tutorial](https://github.com/HazyResearch/snorkel/tree/master/tutorials/intro) covers the entire Snorkel workflow, showing how to extract spouse relations from news articles.
-The tutorial is available in the following directory:
-```
-tutorials/intro
-```
-You can also check out all the great **[materials](https://simtk.org/frs/?group_id=1263)** from the recent Mobilize Center-hosted [Snorkel workshop](http://mobilize.stanford.edu/events/snorkelworkshop2017/)!
-
-Then, for more content, check out the other tutorials avaliable [here](https://github.com/HazyResearch/snorkel/tree/master/tutorials).
-
 ## Installation
 Snorkel uses Python 2.7 or Python 3 and requires [a few python packages](python-package-requirement.txt) which can be installed using [`conda`](https://www.continuum.io/downloads) and `pip`.
 
