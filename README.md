@@ -1,6 +1,7 @@
-Semi-supervised ensemble learning with weak supervision. 
 
 This repo contains the code used to run the experiments of [Semi-supervised Ensemble Learning with Weak Supervision for Biomedical Relationship Extraction](https://openreview.net/forum?id=rygDeZqap7), presented in the [Automated Knowledge Base Construction 2019 conference](https://www.akbc.ws/2019/) in Amherst, Massachusetts. 
+
+This specific methodology can be used as is to every relationship extraction problem, to extend training datasets to arbitrarily large weakly supervised datasets. If you are using it, please cite our [paper](https://openreview.net/forum?id=rygDeZqap7) 
 
 The code is based on [**snorkel _v0.6.2_**](https://github.com/HazyResearch/snorkel), a framework for information extraction using weak supervision. 
 
